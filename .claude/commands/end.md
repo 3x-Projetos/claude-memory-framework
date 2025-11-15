@@ -2,27 +2,61 @@
 description: Finaliza sessão e cria/atualiza log de atividades
 ---
 
-Leia o arquivo `.workflow-session-logging.md` para consultar o formato de log.
+Finalizando sessão com sistema de memória hierárquica.
 
-Agora vamos finalizar esta sessão:
+## Passos
 
-1. Identifique a data de hoje no formato YYYY.MM.DD
-2. Verifique se já existe arquivo com esse nome
-3. Se não existir, crie novo log seguindo a estrutura documentada
-4. Se existir, pergunte se devo atualizar ou criar nova seção
-
-Para criar o log, você deve me perguntar:
+### 1. Perguntar ao usuário
 - Qual foi o tópico/foco principal da sessão?
 - Quais foram as principais atividades realizadas?
 - Há próximos passos ou tarefas pendentes?
+- (Opcional) Se `.metrics-reflection.tmp` existir, perguntar se deseja incluir
 
-Com essas informações, crie/atualize o arquivo de log seguindo o formato padrão com bloco `[session-log]`.
+### 2. Inferir métricas da sessão
+Análise automática (baseado em `.workflow-metrics-collection.md`):
+- Duration: Inferir da sessão
+- Files modified: Contar arquivos tocados
+- Commits: Se houver git activity
+- Complexity: Baixa/Média/Alta (baseado em linguagem dos logs)
+- New tech: Tecnologias novas mencionadas
+- AI reliance: Baixa/Média/Alta (baseado em autonomia)
 
-**IMPORTANTE**: Após criar/atualizar o log, SEMPRE delete o arquivo `.claude/.current-session-id` usando Bash:
+### 3. Criar/atualizar log diário
+**Localização**: `logs/daily/YYYY.MM.DD.md`
+
+- Se não existir: criar novo com estrutura de `.workflow-session-logging.md`
+- Se existir: adicionar nova seção de sessão
+
+Incluir seção `## Métricas da Sessão` com métricas inferidas e relatadas (se houver)
+
+### 4. Atualizar .session-state.md
+Atualizar working memory com:
+- Última sessão: Data atual
+- Resumo: 1 linha do que foi feito
+- Pendências ativas: Lista de TODOs não completados
+- Arquivos principais: Top 5-10 arquivos tocados
+- Próximos passos: Do que usuário informou
+
+### 5. Detectar necessidade de agregações
+- **Weekly**: Se última semana completa não tem resumo em `logs/weekly/`
+  - Informar usuário: "Semana X de YYYY sem resumo. Execute `/aggregate week` para agregar."
+- **Monthly**: Se último mês completo não tem resumo em `logs/monthly/`
+  - Informar usuário: "Mês YYYY.MM sem resumo. Execute `/aggregate month` para agregar."
+
+### 6. Cleanup
+**CRÍTICO**: Deletar `.claude/.current-session-id` para marcar sessão como registrada:
 ```bash
 rm -f .claude/.current-session-id
 ```
 
-Isso marca a sessão como registrada e evita que o SessionEnd hook crie log duplicado.
+Se `.metrics-reflection.tmp` foi incorporado, deletar também:
+```bash
+rm -f .metrics-reflection.tmp
+```
 
-Ao finalizar, confirme que o log foi criado e deseje um bom trabalho.
+### 7. Confirmação
+Informar ao usuário:
+- ✓ Log criado/atualizado em `logs/daily/YYYY.MM.DD.md`
+- ✓ .session-state.md atualizado
+- (Se aplicável) ⚠️ Agregações pendentes detectadas
+- "Sessão finalizada com sucesso. Até a próxima!"

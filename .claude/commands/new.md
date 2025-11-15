@@ -2,17 +2,53 @@
 description: Inicia nova atividade (carrega contexto mas começa do zero)
 ---
 
-Leia o arquivo `.claude-memory.md` para carregar a caixa de ferramentas e contexto disponível neste diretório.
+Iniciando nova atividade com awareness de contexto.
 
-Busque o arquivo de log mais recente (formato YYYY.MM.DD.md) apenas para awareness:
-1. Liste arquivos que seguem o padrão de data (2025.*.md, 2024.*.md, etc)
-2. Identifique o mais recente
+## Passos
 
-Apresente:
-- Quantas ferramentas estão disponíveis
-- **Última sessão**: Data (apenas para contexto)
-- Confirme: "Pronto para nova atividade. O que vamos fazer?"
+### 1. Executar redação de PII
+```bash
+python .claude/redact-pii.py
+```
 
-Seja conciso. Informa contexto mas não lista pendências - foco em começar algo novo.
+### 2. Carregar memória global (redacted)
+Ler `~/.claude-memory/global-memory.safe.md`:
+- User Profile
+- Collaboration Patterns
+- Projects Context (awareness)
+- Architecture Decisions
 
-Ao final, lembre: use `/end` para registrar a sessão.
+### 3. Carregar resumos de alto nível (awareness)
+Ler apenas para contexto geral, **sem** detalhes de pendências:
+
+a) **Último resumo mensal** (se existir):
+   - Tendências de longo prazo
+   - Tecnologias e padrões recentes
+
+b) **Última sessão** (data apenas):
+   - Ler `.session-state.md` apenas para saber quando foi a última vez
+
+### 4. Detectar agregações pendentes (opcional)
+Se houver semanas/meses sem agregação, informar brevemente (não insistir).
+
+### 5. Apresentar contexto ao usuário
+Formato conciso e otimista:
+
+```
+**Framework disponível**: X ferramentas, Y workflows
+**Última sessão**: [Data]
+(Se houver) **Contexto recente**: [1 linha sobre o que tem sido trabalhado]
+
+Pronto para nova atividade. O que vamos fazer?
+```
+
+### 6. Lembrete final
+"Use `/end` para registrar esta sessão ao finalizar."
+
+---
+
+## Diferença vs /continue
+- **`/continue`**: Foco em retomar trabalho → lista pendências, próximos passos
+- **`/new`**: Foco em começar novo → awareness de contexto, sem listar TODOs
+
+Ambos carregam memória global e hierarquia, mas /new não pressiona para completar pendências.
