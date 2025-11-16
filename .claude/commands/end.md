@@ -44,9 +44,9 @@ Atualizar working memory com:
   - Informar usuário: "Mês YYYY.MM sem resumo. Execute `/aggregate month` para agregar."
 
 ### 6. Cleanup
-**CRÍTICO**: Deletar `.claude/.current-session-id` para marcar sessão como registrada:
+**CRÍTICO**: Deletar arquivos de estado da sessão para marcar como registrada:
 ```bash
-rm -f .claude/.current-session-id
+rm -f .claude/.current-session-id .claude/.previous-session-id
 ```
 
 Se `.metrics-reflection.tmp` foi incorporado, deletar também:

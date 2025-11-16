@@ -17,7 +17,9 @@ def get_log_path():
     """Retorna path do log do dia atual"""
     today = datetime.now().strftime("%Y.%m.%d")
     vault_path = Path(__file__).parent.parent
-    return vault_path / f"{today}.md"
+    logs_dir = vault_path / "logs" / "daily"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    return logs_dir / f"{today}.md"
 
 def session_was_logged():
     """
@@ -115,9 +117,16 @@ def cleanup_session_state():
 def main():
     """Executa lógica do SessionEnd hook"""
     try:
+        # Debug: log execução
+        debug_file = Path(__file__).parent / ".session-end-debug.log"
+        with open(debug_file, 'a', encoding='utf-8') as f:
+            f.write(f"{datetime.now()}: SessionEnd hook EXECUTADO\n")
+
         # Verifica se sessão atual já foi logged
         if session_was_logged():
             # /end foi executado, não precisa fazer nada
+            with open(debug_file, 'a', encoding='utf-8') as f:
+                f.write(f"{datetime.now()}: Sessão já foi logged via /end\n")
             return
 
         # Sessão não foi logged via /end, precisa registrar
@@ -137,10 +146,11 @@ def main():
         # Execução silenciosa (não imprime nada)
 
     except Exception as e:
-        # Erros silenciosos para não quebrar shutdown
-        # Para debug, descomente:
-        # import sys
-        # print(f"SessionEnd hook error: {e}", file=sys.stderr)
+        # Debug: log erro em arquivo
+        import sys
+        debug_file = Path(__file__).parent / ".session-end-debug.log"
+        with open(debug_file, 'a', encoding='utf-8') as f:
+            f.write(f"{datetime.now()}: ERROR - {e}\n")
         pass
 
 if __name__ == "__main__":
