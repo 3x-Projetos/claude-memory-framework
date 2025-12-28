@@ -234,9 +234,51 @@ Se `.metrics-reflection.tmp` foi incorporado, deletar também:
 rm -f .metrics-reflection.tmp
 ```
 
-### 9. Confirmação
+### 9. Cloud Sync (se habilitado)
+
+**Referência completa**: Ver `.claude/workflows/cloud-sync-on-end.md`
+
+**Resumo do processo**:
+
+1. **Verificar se habilitado**:
+   - Ler `~/.claude-memory/.config.json`
+   - Verificar: `sync_enabled == true` && `sync.on_session_end == true`
+   - Ler `cloud_path` (user-configured, não hardcoded!)
+   - Validar que `$CLOUD_PATH/.git/` existe
+
+2. **Se habilitado, executar sync**:
+   ```bash
+   # Copiar arquivos locais para cloud repo
+   cp -r providers integration profile-history projects "$CLOUD_PATH/"
+   cp .config.json global-memory*.md "$CLOUD_PATH/"
+   
+   # Git operations
+   cd "$CLOUD_PATH"
+   git pull --rebase           # Multi-device: integrar mudanças remotas
+   git add .
+   git commit -m "[auto] Session [timestamp] - [topic] ..."
+   git push
+   ```
+
+3. **Tratamento de erros** (non-blocking):
+   - **Conflicts** → Skip com aviso, não bloquear
+   - **Network error** → Skip com aviso, não bloquear
+   - **Path inválido** → Skip com aviso, não bloquear
+   - **Already synced** → Silent skip (nothing to commit)
+
+4. **Capturar resultado**:
+   - ✅ Success: "Cloud sync completo (commit [hash])"
+   - ⚠️ Failed: "Cloud sync failed: [error]" + instrução manual
+   - Silent: Sync não habilitado ou já sincronizado
+
+**IMPORTANTE**: Logs sempre salvos localmente PRIMEIRO. Cloud sync é "best effort".
+
+
+### 10. Confirmação
 Informar ao usuário:
 - ✓ Log criado/atualizado em `~/.claude-memory/providers/claude/logs/daily/YYYY.MM.DD.md`
-- ✓ .session-state.md atualizado
+- ✓ session-state.md atualizado
+- ✓ provider-activities.md atualizado
+- (Se cloud sync habilitado) ✅ Cloud sync completo (commit [hash]) OU ⚠️ Cloud sync falhou: [motivo]
 - (Se aplicável) ⚠️ Agregações pendentes detectadas
 - "Sessão finalizada com sucesso. Até a próxima!"
