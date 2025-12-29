@@ -1,7 +1,7 @@
 # Memory Organization - Local vs Cloud (Optional)
 
-**Version**: 1.0
-**Date**: 2025-12-26
+**Version**: 3.4.0
+**Date**: 2025-12-29
 **Purpose**: Define memory structure with OPTIONAL cloud sync for seamless multi-device interaction
 
 ---
@@ -164,7 +164,7 @@ Setup complete! Use /start to begin.
 **Local-only mode**:
 ```json
 {
-  "version": "2.3",
+  "version": "3.4.0",
   "sync_enabled": false,
   "device_name": "laptop-work",
   "providers": ["claude", "lmstudio"],
@@ -178,9 +178,9 @@ Setup complete! Use /start to begin.
 **Cloud sync mode**:
 ```json
 {
-  "version": "2.3",
+  "version": "3.4.0",
   "sync_enabled": true,
-  "cloud_repo": "https://github.com/luisromano-gf/claude-memory-cloud.git",
+  "cloud_repo": "https://github.com/your-username/your-memory-repo.git",
   "cloud_path": "~/.claude-memory-cloud",
   "device_name": "laptop-work",
   "providers": ["claude", "lmstudio"],
@@ -261,11 +261,11 @@ Requirements:
 - Git configured on this machine
 
 Git configuration:
-✅ User: luisromano-gf
-✅ Email: luis.romano@golfleet.com.br
+✅ User: your-username
+✅ Email: your-email@example.com
 
 Enter your cloud memory repository URL:
-> https://github.com/luisromano-gf/claude-memory-cloud.git
+> https://github.com/your-username/your-memory-repo.git
 
 Options:
 [1] Clone existing repo (if you set this up on another device)
@@ -285,7 +285,7 @@ Next steps:
 3. Copy the URL and run: /link-cloud <url>
 
 Or, if you already created the repo:
-git remote add origin https://github.com/luisromano-gf/claude-memory-cloud.git
+git remote add origin https://github.com/your-username/your-memory-repo.git
 git push -u origin main
 ```
 
@@ -377,7 +377,7 @@ cd claude-memory-system
 
 **Bootstrap runs**:
 ```
-Claude Memory Framework v2.3
+Claude Memory Framework v3.4.0
 
 [1] Creating local memory structure...
   ✅ ~/.claude-memory/ created
@@ -416,29 +416,32 @@ Agent: Guides through cloud setup (see above)
 
 ## 🎯 Implementation Checklist
 
-### Phase 1: Local-Only (Works Now)
+### Phase 1: Local-Only  - COMPLETED
 - [x] `~/.claude-memory/` structure
 - [x] Local session state
 - [x] Local daily logs
 - [x] Provider-agnostic design
 
 ### Phase 2: Config Detection
-- [ ] Create `.config.json` schema
-- [ ] Bootstrap script with cloud detection
-- [ ] `/setup-cloud` command
-- [ ] `/disable-cloud` command
+ - COMPLETED (v2.3)
+- [x] Create `.config.json` schema
+- [x] Bootstrap script with cloud detection
+- [x] `/setup-cloud` command
+- [x] `/disable-cloud` command
 
 ### Phase 3: Cloud Sync (Optional)
-- [ ] Cloud memory structure generator
-- [ ] Sync scripts (pull on start, push on end)
-- [ ] Conflict resolution
-- [ ] Cross-device timeline
+ - COMPLETED (v2.3.1)
+- [x] Cloud memory structure generator
+- [x] Sync scripts (auto-sync on `/end`)
+- [x] Conflict resolution (latest-timestamp)
+- [x] Cross-device timeline (provider-activities.md)
 
 ### Phase 4: Polish
-- [ ] Documentation for new users
-- [ ] Migration guide (local → cloud)
-- [ ] Troubleshooting guide
-- [ ] Example repos (for testing)
+ - COMPLETED (v3.4.0)
+- [x] Documentation for new users (README, QUICKSTART)
+- [x] Migration guide (local -> cloud via `/setup-cloud`)
+- [x] Troubleshooting guide (in README.md)
+- [x] Progressive context loading (v3.4.0)
 
 ---
 
