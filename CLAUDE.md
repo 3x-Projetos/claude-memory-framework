@@ -2,6 +2,20 @@
 
 Multi-device memory system for AI providers. This complements ~/.claude/CLAUDE.md with framework-specific context.
 
+## 🚨 CRITICAL: Data Accuracy
+
+**ABSOLUTE RULE - NEVER INVENT DATA**:
+- ❌ NO fabricated numbers (costs, metrics, percentages, benchmarks)
+- ❌ NO made-up status values (Ctx%, 5H%, WK%)
+- ❌ NO guessed pricing or specifications
+- ✅ ALWAYS verify from actual sources (files, WebSearch, user)
+- ✅ ALWAYS cite sources for factual claims
+- ✅ If unknown, say "I need to research this" - never guess
+
+**Why**: Invented data ruins decisions, costs money/time, breaks trust.
+
+---
+
 ## Quick Reference
 
 **Memory Location**: `~/.claude-memory/`
