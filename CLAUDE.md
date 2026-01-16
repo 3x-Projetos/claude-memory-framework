@@ -18,13 +18,19 @@ Multi-device memory system for AI providers. This complements ~/.claude/CLAUDE.m
 
 ## 🤖 CRITICAL: Agent-First Development
 
-**ABSOLUTE RULE - ALWAYS USE SPECIALIZED AGENTS**:
+**ABSOLUTE RULE - ALWAYS USE SPECIALIZED AGENTS AND TEAMS**:
 - ✅ ALWAYS use existing specialized agents for tasks that match their domain
 - ✅ If no suitable agent exists, CREATE ONE before starting work
+- ✅ Use TEAMS for complex tasks requiring multiple agents (see TEAMS-FRAMEWORK.md)
 - ✅ Agents prevent context bloat and enable focused, specialized problem-solving
 - ✅ Agents maintain expertise and best practices in their domain
 - ❌ NEVER do complex work directly without considering agents first
 - ❌ NEVER skip agent creation when a new specialization is needed
+
+**Key Concepts**:
+- **Persona/Agent Definition**: GUIDE.md file defining expertise (e.g., `backend-validator/GUIDE.md`)
+- **Worker/Agent Instance**: Parallel execution using Task tool
+- **Team**: Structured coordination of multiple agents (Sequential, Parallel, Hierarchical, Iterative, Hub-and-Spoke)
 
 **Available Agents (check `.claude/agents/` directory)**:
 - `backend-validator` - Validate routes, schemas, error handling, security
@@ -33,14 +39,29 @@ Multi-device memory system for AI providers. This complements ~/.claude/CLAUDE.m
 - `test-specialist` - Analyze coverage, suggest test cases, validate quality
 - `ui-specialist` - Evaluate layout, spacing, visual design, responsiveness
 - `ux-specialist` - Analyze usability, flows, accessibility, error handling
+- `api-debugger` - Compare implementations, debug API issues, analyze Postman/scripts
 
 **Agent-First Workflow**:
-1. **Before starting ANY complex task**: Check if agent exists
-2. **If agent exists**: Use it immediately for that domain
-3. **If no agent exists**: Create specialized agent FIRST, then use it
-4. **Never work directly**: Let agents handle their specialization
+1. **Identify task complexity**: Single agent or team needed?
+2. **Consult TEAMS-FRAMEWORK.md**: Choose appropriate team pattern (see `.claude/docs/TEAMS-FRAMEWORK.md`)
+3. **Check existing agents**: Use `.claude/agents/` directory
+4. **Create missing agents**: Define persona before starting work
+5. **Execute team workflow**: Parallel, Sequential, or Iterative based on pattern
+6. **Synthesize results**: Coordinate between agents
 
-**Why**: Agents provide consistent expertise, reduce errors, maintain best practices, and prevent context waste.
+**Team Patterns** (see TEAMS-FRAMEWORK.md for details):
+- **Sequential Team**: Tasks depend on previous results (e.g., Plan → Design → Implement → Validate)
+- **Parallel Team**: Independent tasks run simultaneously (e.g., validate multiple files)
+- **Hierarchical Team**: Complex problems with sub-teams (e.g., Backend Team + Frontend Team)
+- **Iterative Team**: Refinement until approval (e.g., Design → Review → Refine → Approve)
+- **Hub-and-Spoke Team**: Coordinator consults specialists (e.g., Pre-deployment checklist)
+
+**Why**: Agents provide consistent expertise, teams enable complex problem-solving, both reduce errors and prevent context waste.
+
+**Reference Documentation**:
+- Full team patterns: `.claude/docs/TEAMS-FRAMEWORK.md`
+- Agent creation: Follow patterns in existing agents
+- Examples: See Sprint 3 in TEAMS-FRAMEWORK.md
 
 ---
 
