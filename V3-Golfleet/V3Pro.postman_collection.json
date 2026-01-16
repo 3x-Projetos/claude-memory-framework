@@ -1,0 +1,3101 @@
+{
+	"info": {
+		"_postman_id": "1d60e40d-db0c-4390-b2c2-5116f311f5f2",
+		"name": "V3Pro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29856043"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get The Latest Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Recebe os últimos eventos dos devices, podendo ser de 3 tipos - hardware, vision ou telemetry.\r\n// Caso você envie o ULID de um evento dentro deste array de items, ele será removido (processado) desta lista de retorno, sendo consumido.\r\n// Neste ambiente, não há consumo real de eventos, apenas uma simulação.\r\n{\r\n    \"items\": []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/latest",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get the Events From Devices by Time",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "inithour",
+								"value": "16/05/2024 13:48:00"
+							},
+							{
+								"key": "endhour",
+								"value": "16/05/2024 14:48:00"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Endpoint que retorna uma lista de eventos de acordo com o tempo e data passado no header da requisição, o intervalo máximo é de 1 hora.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/devices/862798050582309/events/search/time",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"devices",
+								"862798050582309",
+								"events",
+								"search",
+								"time"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Files From Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Retorna os arquivos de imagens gerados pelos eventos, neste caso, disponibilizamos 3 eventos com fotos com os seguintes ulids: 01HMKFCMWF49T5ZR4WT34BANBF, 01GZXXCVVPEKM7E830XAMJKA14, 01HP5X70WA32JHW7WGCD9VJ314.\r\n{\r\n    \"files\": [\r\n        {\r\n            \"bucketname\": \"573598560824-prod-device-images\",\r\n            \"filename\": \"01GZXXCVVPEKM7E830XAMJKA14/862798051078026/01HX9YX9397BJ4JBHBCJ1H2PNV_image0.jpg\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/files",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReInsert Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"events\":[{\"account\":\"01GY8D9PB7FGWCQEPN9KYGK6HK\",\"payload\":\"232156330300EEBB421E00D40A0F38363237393830353038333238333712133138392E38352E3134362E3230303A393031301A1A3031485733465353384D52444D46304D374A3953535A30384B3220033A720805109FCAF3B7F03118E0B5959DEF312117670C7382E636C02925EB7074958847C031000000400A0286405D0000FE42680175D6F4D6467D10583B41850110583B418801149001AAFFFFFFFFFFFFFFFF019801D405A00105A80183CC9B17B001FFBA02B801FFFFFFFF07C00101CA01020803421A30314759384439504237464757435145504E394B59474B36484B\",\"imei\":\"862798050832837\",\"timestamp\":1713809198652}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/reinsert/events/batch",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"reinsert",
+								"events",
+								"batch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReInsert Events Dynamo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"telemetryEvents\":[\r\n{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZJQ78T9R4FMRYKY1PMCD2R\",\"messageType\":3,\"sequenceNumber\":123,\"date\":\"2024/05/03/15/56\",\"timestamp\":1714751773978,\"lastTimestampOfFix\":1714751773000,\"latitude\":-17.592127,\"longitude\":-39.73809,\"altitude\":93.37899780273438,\"gpsHeading\":355.395,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.715,\"vdop\":0,\"ignitionON\":false,\"odometer\":44406,\"vehicleBatteryVoltage\":25.48,\"backupBatteryVoltage\":25.48,\"connectionType\":17,\"signalStrength\":-92,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714751776170,\"processTimestamp\":1714751783608,\"ttlTimestamp\":1714751783},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZF9BMT9MF0GHJX370E5ECW\",\"messageType\":3,\"sequenceNumber\":122,\"date\":\"2024/05/03/14/56\",\"timestamp\":1714748173978,\"lastTimestampOfFix\":1714748173000,\"latitude\":-17.592127,\"longitude\":-39.73809,\"altitude\":93.37899780273438,\"gpsHeading\":355.395,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.673,\"vdop\":0,\"ignitionON\":false,\"odometer\":44406,\"vehicleBatteryVoltage\":25.574,\"backupBatteryVoltage\":25.574,\"connectionType\":17,\"signalStrength\":-90,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714748176085,\"processTimestamp\":1714748183061,\"ttlTimestamp\":1714748183},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZBVG0T38Q2YMRPP1PZA71T\",\"messageType\":3,\"sequenceNumber\":121,\"date\":\"2024/05/03/13/56\",\"timestamp\":1714744573978,\"lastTimestampOfFix\":1714744573000,\"latitude\":-17.592127,\"longitude\":-39.73809,\"altitude\":93.37899780273438,\"gpsHeading\":355.395,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.615,\"vdop\":0,\"ignitionON\":false,\"odometer\":44406,\"vehicleBatteryVoltage\":25.927,\"backupBatteryVoltage\":25.927,\"connectionType\":17,\"signalStrength\":-91,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714744576086,\"processTimestamp\":1714744583858,\"ttlTimestamp\":1714744583},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZBJB1TTBVDZESNBJB8J9C9\",\"messageType\":3,\"sequenceNumber\":120,\"date\":\"2024/05/03/13/51\",\"timestamp\":1714744273978,\"lastTimestampOfFix\":1714744273000,\"latitude\":-17.592127,\"longitude\":-39.73809,\"altitude\":93.37899780273438,\"gpsHeading\":355.395,\"speed\":0,\"satellites\":12,\"fixed\":true,\"hdop\":0.822,\"vdop\":0,\"ignitionON\":false,\"odometer\":44406,\"vehicleBatteryVoltage\":26.749,\"backupBatteryVoltage\":26.749,\"connectionType\":17,\"signalStrength\":-91,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714744274613,\"processTimestamp\":1714744281010,\"ttlTimestamp\":1714744281},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZBFXGZFCV04BJM3GD0S4TG\",\"messageType\":3,\"sequenceNumber\":119,\"date\":\"2024/05/03/13/49\",\"timestamp\":1714744194591,\"lastTimestampOfFix\":1714744194000,\"latitude\":-17.592212,\"longitude\":-39.73798,\"altitude\":93.89299774169922,\"gpsHeading\":277.938,\"speed\":6,\"satellites\":16,\"fixed\":true,\"hdop\":0.614,\"vdop\":0,\"ignitionON\":true,\"odometer\":44278,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-80,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714744196227,\"processTimestamp\":1714744203568,\"ttlTimestamp\":1714744203},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZBADR80N7C7W4EZ3A3S04B\",\"messageType\":3,\"sequenceNumber\":117,\"date\":\"2024/05/03/13/46\",\"timestamp\":1714744014600,\"lastTimestampOfFix\":1714744014000,\"latitude\":-17.592399,\"longitude\":-39.738033,\"altitude\":87.84700012207031,\"gpsHeading\":48.748,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.641,\"vdop\":0,\"ignitionON\":true,\"odometer\":44241,\"vehicleBatteryVoltage\":19.582,\"backupBatteryVoltage\":19.582,\"connectionType\":17,\"signalStrength\":-84,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714744015480,\"processTimestamp\":1714744022578,\"ttlTimestamp\":1714744022},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZAXN1X39BC4NCF7K62340W\",\"messageType\":3,\"sequenceNumber\":116,\"date\":\"2024/05/03/13/39\",\"timestamp\":1714743596093,\"lastTimestampOfFix\":1714743595000,\"latitude\":-17.592399,\"longitude\":-39.738033,\"altitude\":87.84700012207031,\"gpsHeading\":48.748,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.614,\"vdop\":0,\"ignitionON\":false,\"odometer\":44241,\"vehicleBatteryVoltage\":25.927,\"backupBatteryVoltage\":25.927,\"connectionType\":17,\"signalStrength\":-84,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714743601083,\"processTimestamp\":1714743606522,\"ttlTimestamp\":1714743606},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZAMG2X8F0SBGJVBZ7HTSGS\",\"messageType\":3,\"sequenceNumber\":115,\"date\":\"2024/05/03/13/34\",\"timestamp\":1714743296093,\"lastTimestampOfFix\":1714743295000,\"latitude\":-17.592399,\"longitude\":-39.738033,\"altitude\":87.84700012207031,\"gpsHeading\":55.021,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.62,\"vdop\":0,\"ignitionON\":false,\"odometer\":44241,\"vehicleBatteryVoltage\":26.796,\"backupBatteryVoltage\":26.796,\"connectionType\":17,\"signalStrength\":-84,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714743296787,\"processTimestamp\":1714743304414,\"ttlTimestamp\":1714743304},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZAJW2WC0S399KGNAAJJTQH\",\"messageType\":3,\"sequenceNumber\":114,\"date\":\"2024/05/03/13/34\",\"timestamp\":1714743242850,\"lastTimestampOfFix\":1714743242000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":236.242,\"speed\":0,\"satellites\":13,\"fixed\":true,\"hdop\":0.732,\"vdop\":0,\"ignitionON\":true,\"odometer\":44232,\"vehicleBatteryVoltage\":28.183,\"backupBatteryVoltage\":28.183,\"connectionType\":17,\"signalStrength\":-89,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714743246202,\"processTimestamp\":1714743253418,\"ttlTimestamp\":1714743253},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZADC9R6MES85NXRAQ7EM23\",\"messageType\":3,\"sequenceNumber\":108,\"date\":\"2024/05/03/13/31\",\"timestamp\":1714743062841,\"lastTimestampOfFix\":1714743062000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":44.606,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.586,\"vdop\":0,\"ignitionON\":true,\"odometer\":44232,\"vehicleBatteryVoltage\":25.645,\"backupBatteryVoltage\":25.645,\"connectionType\":17,\"signalStrength\":-86,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714743063701,\"processTimestamp\":1714743070947,\"ttlTimestamp\":1714743070},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ8YEZFFX7XAM1SBS6YQ034\",\"messageType\":3,\"sequenceNumber\":103,\"date\":\"2024/05/03/13/05\",\"timestamp\":1714741525487,\"lastTimestampOfFix\":1714741525000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":44.606,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.653,\"vdop\":0,\"ignitionON\":false,\"odometer\":44232,\"vehicleBatteryVoltage\":25.762,\"backupBatteryVoltage\":25.762,\"connectionType\":17,\"signalStrength\":-92,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714741526188,\"processTimestamp\":1714741532906,\"ttlTimestamp\":1714741532},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ5GKBC2HEC9D6WGQMCYPR2\",\"messageType\":3,\"sequenceNumber\":102,\"date\":\"2024/05/03/12/05\",\"timestamp\":1714737925485,\"lastTimestampOfFix\":1714737925000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":44.606,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.625,\"vdop\":0,\"ignitionON\":false,\"odometer\":44232,\"vehicleBatteryVoltage\":25.927,\"backupBatteryVoltage\":25.927,\"connectionType\":17,\"signalStrength\":-82,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714737926089,\"processTimestamp\":1714737932817,\"ttlTimestamp\":1714737932},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ57ECB3DGFS6FBQQYZBSHX\",\"messageType\":3,\"sequenceNumber\":101,\"date\":\"2024/05/03/12/00\",\"timestamp\":1714737625483,\"lastTimestampOfFix\":1714737625000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":44.606,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.843,\"vdop\":0,\"ignitionON\":false,\"odometer\":44232,\"vehicleBatteryVoltage\":26.585,\"backupBatteryVoltage\":26.585,\"connectionType\":17,\"signalStrength\":-85,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714737626087,\"processTimestamp\":1714737632672,\"ttlTimestamp\":1714737632},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ54519XGEZXMF7NMZP7A4D\",\"messageType\":3,\"sequenceNumber\":99,\"date\":\"2024/05/03/11/58\",\"timestamp\":1714737517609,\"lastTimestampOfFix\":1714737517000,\"latitude\":-17.592515,\"longitude\":-39.738103,\"altitude\":109.12200164794922,\"gpsHeading\":57.114,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.599,\"vdop\":0,\"ignitionON\":true,\"odometer\":44223,\"vehicleBatteryVoltage\":25.128,\"backupBatteryVoltage\":25.128,\"connectionType\":17,\"signalStrength\":-87,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714737518438,\"processTimestamp\":1714737523705,\"ttlTimestamp\":1714737523},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ3VTJ0J8E9RGKJHVDM9VBJ\",\"messageType\":3,\"sequenceNumber\":98,\"date\":\"2024/05/03/11/36\",\"timestamp\":1714736196161,\"lastTimestampOfFix\":1714736195000,\"latitude\":-17.592577,\"longitude\":-39.738179,\"altitude\":103.81600189208984,\"gpsHeading\":40.818,\"speed\":0,\"satellites\":20,\"fixed\":true,\"hdop\":0.552,\"vdop\":0,\"ignitionON\":false,\"odometer\":44212,\"vehicleBatteryVoltage\":26.115,\"backupBatteryVoltage\":26.115,\"connectionType\":17,\"signalStrength\":-87,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714736201183,\"processTimestamp\":1714736208428,\"ttlTimestamp\":1714736208},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ3JNK090KXN85N89MTA4FM\",\"messageType\":3,\"sequenceNumber\":97,\"date\":\"2024/05/03/11/31\",\"timestamp\":1714735896160,\"lastTimestampOfFix\":1714735895000,\"latitude\":-17.592577,\"longitude\":-39.738179,\"altitude\":103.81600189208984,\"gpsHeading\":40.818,\"speed\":0,\"satellites\":19,\"fixed\":true,\"hdop\":0.562,\"vdop\":0,\"ignitionON\":false,\"odometer\":44212,\"vehicleBatteryVoltage\":26.702,\"backupBatteryVoltage\":26.702,\"connectionType\":17,\"signalStrength\":-95,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714735896815,\"processTimestamp\":1714735905996,\"ttlTimestamp\":1714735905},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ3FRGQPDK1Y82M4JAZNH8A\",\"messageType\":3,\"sequenceNumber\":95,\"date\":\"2024/05/03/11/30\",\"timestamp\":1714735800855,\"lastTimestampOfFix\":1714735800000,\"latitude\":-17.592431,\"longitude\":-39.738114,\"altitude\":98.697998046875,\"gpsHeading\":74.814,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.594,\"vdop\":0,\"ignitionON\":true,\"odometer\":44122,\"vehicleBatteryVoltage\":25.433,\"backupBatteryVoltage\":25.433,\"connectionType\":17,\"signalStrength\":-88,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714735801238,\"processTimestamp\":1714735807969,\"ttlTimestamp\":1714735807},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ37E26048DFXG8HC83VZF2\",\"messageType\":3,\"sequenceNumber\":94,\"date\":\"2024/05/03/11/25\",\"timestamp\":1714735528007,\"lastTimestampOfFix\":1714735527000,\"latitude\":-17.592431,\"longitude\":-39.738114,\"altitude\":98.697998046875,\"gpsHeading\":218.862,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.673,\"vdop\":0,\"ignitionON\":false,\"odometer\":44122,\"vehicleBatteryVoltage\":26.914,\"backupBatteryVoltage\":26.914,\"connectionType\":17,\"signalStrength\":-88,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714735528767,\"processTimestamp\":1714735536084,\"ttlTimestamp\":1714735536},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ33H58VPA6QRKZP2NH3MK5\",\"messageType\":3,\"sequenceNumber\":93,\"date\":\"2024/05/03/11/23\",\"timestamp\":1714735400104,\"lastTimestampOfFix\":1714735399000,\"latitude\":-17.592431,\"longitude\":-39.738114,\"altitude\":98.697998046875,\"gpsHeading\":218.862,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":44122,\"vehicleBatteryVoltage\":28.018,\"backupBatteryVoltage\":28.018,\"connectionType\":17,\"signalStrength\":-89,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714735401260,\"processTimestamp\":1714735408024,\"ttlTimestamp\":1714735408},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ2Y1C6HEX53WK0JTHARHAA\",\"messageType\":3,\"sequenceNumber\":91,\"date\":\"2024/05/03/11/20\",\"timestamp\":1714735220102,\"lastTimestampOfFix\":1714735219000,\"latitude\":-17.59189,\"longitude\":-39.738439,\"altitude\":100.76599884033203,\"gpsHeading\":115.411,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.603,\"vdop\":0,\"ignitionON\":true,\"odometer\":44021,\"vehicleBatteryVoltage\":25.574,\"backupBatteryVoltage\":25.574,\"connectionType\":17,\"signalStrength\":-86,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714735221040,\"processTimestamp\":1714735227601,\"ttlTimestamp\":1714735227},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ2PZP656PS1FD15G81C0N2\",\"messageType\":3,\"sequenceNumber\":90,\"date\":\"2024/05/03/11/16\",\"timestamp\":1714734988998,\"lastTimestampOfFix\":1714734988000,\"latitude\":-17.59189,\"longitude\":-39.738439,\"altitude\":100.76599884033203,\"gpsHeading\":115.411,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.666,\"vdop\":0,\"ignitionON\":false,\"odometer\":44021,\"vehicleBatteryVoltage\":27.125,\"backupBatteryVoltage\":27.125,\"connectionType\":17,\"signalStrength\":-88,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734989657,\"processTimestamp\":1714734995512,\"ttlTimestamp\":1714734995},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ2KG7DXHBRT6NGT6VQZ4RR\",\"messageType\":3,\"sequenceNumber\":89,\"date\":\"2024/05/03/11/14\",\"timestamp\":1714734874861,\"lastTimestampOfFix\":1714734874000,\"latitude\":-17.593139,\"longitude\":-39.737478,\"altitude\":98.94200134277344,\"gpsHeading\":48.566,\"speed\":6,\"satellites\":20,\"fixed\":true,\"hdop\":0.572,\"vdop\":0,\"ignitionON\":true,\"odometer\":43781,\"vehicleBatteryVoltage\":28.206,\"backupBatteryVoltage\":28.206,\"connectionType\":17,\"signalStrength\":-91,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734876214,\"processTimestamp\":1714734881637,\"ttlTimestamp\":1714734881},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ2E0EC2SY3SJ59S8PBCB18\",\"messageType\":3,\"sequenceNumber\":88,\"date\":\"2024/05/03/11/11\",\"timestamp\":1714734694865,\"lastTimestampOfFix\":1714734694000,\"latitude\":-17.591842,\"longitude\":-39.745943,\"altitude\":102.87699890136719,\"gpsHeading\":42.785,\"speed\":44,\"satellites\":19,\"fixed\":true,\"hdop\":0.641,\"vdop\":0,\"ignitionON\":true,\"odometer\":42375,\"vehicleBatteryVoltage\":28.206,\"backupBatteryVoltage\":28.206,\"connectionType\":17,\"signalStrength\":-84,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734696101,\"processTimestamp\":1714734703359,\"ttlTimestamp\":1714734703},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ28GNJG5M0G63R4XNCN9Z5\",\"messageType\":3,\"sequenceNumber\":87,\"date\":\"2024/05/03/11/08\",\"timestamp\":1714734514866,\"lastTimestampOfFix\":1714734514000,\"latitude\":-17.612917,\"longitude\":-39.759306,\"altitude\":94.76899719238281,\"gpsHeading\":36.98,\"speed\":75,\"satellites\":20,\"fixed\":true,\"hdop\":0.567,\"vdop\":0,\"ignitionON\":true,\"odometer\":39409,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734531130,\"processTimestamp\":1714734539232,\"ttlTimestamp\":1714734539},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ230WNYBCQ30TKK3DQAA4Q\",\"messageType\":3,\"sequenceNumber\":86,\"date\":\"2024/05/03/11/05\",\"timestamp\":1714734334872,\"lastTimestampOfFix\":1714734334000,\"latitude\":-17.638953,\"longitude\":-39.769385,\"altitude\":74.72100067138672,\"gpsHeading\":7.799,\"speed\":78,\"satellites\":20,\"fixed\":true,\"hdop\":0.565,\"vdop\":0,\"ignitionON\":true,\"odometer\":36236,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":15,\"signalStrength\":-99,\"mcc\":724,\"mnc\":11,\"cellId\":17949000,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734358656,\"processTimestamp\":1714734366572,\"ttlTimestamp\":1714734366},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ230WNYBCQ30TKK3DQAA4Q\",\"messageType\":3,\"sequenceNumber\":86,\"date\":\"2024/05/03/11/05\",\"timestamp\":1714734334872,\"lastTimestampOfFix\":1714734334000,\"latitude\":-17.638953,\"longitude\":-39.769385,\"altitude\":74.72100067138672,\"gpsHeading\":7.799,\"speed\":78,\"satellites\":20,\"fixed\":true,\"hdop\":0.565,\"vdop\":0,\"ignitionON\":true,\"odometer\":36236,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":15,\"signalStrength\":-99,\"mcc\":724,\"mnc\":11,\"cellId\":17949000,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734358655,\"processTimestamp\":1714734365627,\"ttlTimestamp\":1714734365},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ230WNYBCQ30TKK3DQAA4Q\",\"messageType\":3,\"sequenceNumber\":86,\"date\":\"2024/05/03/11/05\",\"timestamp\":1714734334872,\"lastTimestampOfFix\":1714734334000,\"latitude\":-17.638953,\"longitude\":-39.769385,\"altitude\":74.72100067138672,\"gpsHeading\":7.799,\"speed\":78,\"satellites\":20,\"fixed\":true,\"hdop\":0.565,\"vdop\":0,\"ignitionON\":true,\"odometer\":36236,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":15,\"signalStrength\":-99,\"mcc\":724,\"mnc\":11,\"cellId\":17949000,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734358392,\"processTimestamp\":1714734365611,\"ttlTimestamp\":1714734365},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ1R1ACE4DTA26734BB6AXP\",\"messageType\":3,\"sequenceNumber\":84,\"date\":\"2024/05/03/10/59\",\"timestamp\":1714733974860,\"lastTimestampOfFix\":1714733974000,\"latitude\":-17.704668,\"longitude\":-39.768317,\"altitude\":82.63999938964844,\"gpsHeading\":356.442,\"speed\":72,\"satellites\":20,\"fixed\":true,\"hdop\":0.56,\"vdop\":0,\"ignitionON\":true,\"odometer\":28704,\"vehicleBatteryVoltage\":28.018,\"backupBatteryVoltage\":28.018,\"connectionType\":3,\"signalStrength\":-109,\"mcc\":724,\"mnc\":11,\"cellId\":3731,\"locationAreaCode\":4573,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734232776,\"processTimestamp\":1714734240598,\"ttlTimestamp\":1714734240},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ1JHHMQ7AHDWYRXG0724WK\",\"messageType\":3,\"sequenceNumber\":82,\"date\":\"2024/05/03/10/56\",\"timestamp\":1714733794876,\"lastTimestampOfFix\":1714733794000,\"latitude\":-17.729226,\"longitude\":-39.766696,\"altitude\":72.71800231933594,\"gpsHeading\":356.128,\"speed\":30,\"satellites\":20,\"fixed\":true,\"hdop\":0.558,\"vdop\":0,\"ignitionON\":true,\"odometer\":25979,\"vehicleBatteryVoltage\":28.183,\"backupBatteryVoltage\":28.183,\"connectionType\":0,\"signalStrength\":-2147483648,\"mcc\":-1,\"mnc\":-1,\"cellId\":-1,\"locationAreaCode\":-1,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734232202,\"processTimestamp\":1714734239902,\"ttlTimestamp\":1714734239},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ1XH3CB8PDY09W2K281C0Z\",\"messageType\":3,\"sequenceNumber\":85,\"date\":\"2024/05/03/11/02\",\"timestamp\":1714734154860,\"lastTimestampOfFix\":1714734154000,\"latitude\":-17.673276,\"longitude\":-39.774032,\"altitude\":88.39099884033203,\"gpsHeading\":7.543,\"speed\":76,\"satellites\":20,\"fixed\":true,\"hdop\":0.562,\"vdop\":0,\"ignitionON\":true,\"odometer\":32405,\"vehicleBatteryVoltage\":28.183,\"backupBatteryVoltage\":28.183,\"connectionType\":15,\"signalStrength\":-113,\"mcc\":724,\"mnc\":11,\"cellId\":17938081,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734233062,\"processTimestamp\":1714734239285,\"ttlTimestamp\":1714734239},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ1D1RHWAKM7BGPNBEPDM7X\",\"messageType\":3,\"sequenceNumber\":80,\"date\":\"2024/05/03/10/53\",\"timestamp\":1714733614866,\"lastTimestampOfFix\":1714733614000,\"latitude\":-17.744697,\"longitude\":-39.766008,\"altitude\":54.82899856567383,\"gpsHeading\":339.044,\"speed\":18,\"satellites\":18,\"fixed\":true,\"hdop\":0.601,\"vdop\":0,\"ignitionON\":true,\"odometer\":24256,\"vehicleBatteryVoltage\":28.23,\"backupBatteryVoltage\":28.23,\"connectionType\":0,\"signalStrength\":-2147483648,\"mcc\":-1,\"mnc\":-1,\"cellId\":-1,\"locationAreaCode\":-1,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734231662,\"processTimestamp\":1714734238470,\"ttlTimestamp\":1714734238},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ1226EBZQ951YTF175EYSP\",\"messageType\":3,\"sequenceNumber\":78,\"date\":\"2024/05/03/10/47\",\"timestamp\":1714733254863,\"lastTimestampOfFix\":1714733254000,\"latitude\":-17.78944,\"longitude\":-39.779225,\"altitude\":65.98100280761719,\"gpsHeading\":14.682,\"speed\":71,\"satellites\":19,\"fixed\":true,\"hdop\":0.56,\"vdop\":0,\"ignitionON\":true,\"odometer\":18258,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":15,\"signalStrength\":-113,\"mcc\":724,\"mnc\":11,\"cellId\":17948730,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734231103,\"processTimestamp\":1714734238453,\"ttlTimestamp\":1714734238},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ17HZCNPV7AFMAXNCKP5ZE\",\"messageType\":3,\"sequenceNumber\":79,\"date\":\"2024/05/03/10/50\",\"timestamp\":1714733434860,\"lastTimestampOfFix\":1714733434000,\"latitude\":-17.760393,\"longitude\":-39.776366,\"altitude\":80.1719970703125,\"gpsHeading\":56.39,\"speed\":46,\"satellites\":19,\"fixed\":true,\"hdop\":0.562,\"vdop\":0,\"ignitionON\":true,\"odometer\":21703,\"vehicleBatteryVoltage\":28.065,\"backupBatteryVoltage\":28.065,\"connectionType\":0,\"signalStrength\":-2147483648,\"mcc\":-1,\"mnc\":-1,\"cellId\":-1,\"locationAreaCode\":-1,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714734231373,\"processTimestamp\":1714734238072,\"ttlTimestamp\":1714734238},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ0WJDCBRKDHMCJPK5WGNTF\",\"messageType\":3,\"sequenceNumber\":77,\"date\":\"2024/05/03/10/44\",\"timestamp\":1714733074869,\"lastTimestampOfFix\":1714733074000,\"latitude\":-17.814928,\"longitude\":-39.789998,\"altitude\":31.339000701904297,\"gpsHeading\":83.577,\"speed\":72,\"satellites\":18,\"fixed\":true,\"hdop\":0.608,\"vdop\":0,\"ignitionON\":true,\"odometer\":15013,\"vehicleBatteryVoltage\":28.065,\"backupBatteryVoltage\":28.065,\"connectionType\":15,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":17935059,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714733091617,\"processTimestamp\":1714733098634,\"ttlTimestamp\":1714733098},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ0WJDCBRKDHMCJPK5WGNTF\",\"messageType\":3,\"sequenceNumber\":77,\"date\":\"2024/05/03/10/44\",\"timestamp\":1714733074869,\"lastTimestampOfFix\":1714733074000,\"latitude\":-17.814928,\"longitude\":-39.789998,\"altitude\":31.339000701904297,\"gpsHeading\":83.577,\"speed\":72,\"satellites\":18,\"fixed\":true,\"hdop\":0.608,\"vdop\":0,\"ignitionON\":true,\"odometer\":15013,\"vehicleBatteryVoltage\":28.065,\"backupBatteryVoltage\":28.065,\"connectionType\":15,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":17935059,\"locationAreaCode\":40173,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714733087476,\"processTimestamp\":1714733094846,\"ttlTimestamp\":1714733094},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ0Q2MCDKVPXAPYFAZ8K4P1\",\"messageType\":3,\"sequenceNumber\":76,\"date\":\"2024/05/03/10/41\",\"timestamp\":1714732894860,\"lastTimestampOfFix\":1714732894000,\"latitude\":-17.836845,\"longitude\":-39.798168,\"altitude\":78.81999969482422,\"gpsHeading\":12.342,\"speed\":33,\"satellites\":18,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":12229,\"vehicleBatteryVoltage\":28.159,\"backupBatteryVoltage\":28.159,\"connectionType\":12,\"signalStrength\":-101,\"mcc\":724,\"mnc\":11,\"cellId\":17944331,\"locationAreaCode\":32073,\"timingAdvance\":-1,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714732898765,\"processTimestamp\":1714732906033,\"ttlTimestamp\":1714732906},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ0HJVFDHW65R8X27AXE8TC\",\"messageType\":3,\"sequenceNumber\":75,\"date\":\"2024/05/03/10/38\",\"timestamp\":1714732714864,\"lastTimestampOfFix\":1714732714000,\"latitude\":-17.863356,\"longitude\":-39.804185,\"altitude\":72.71900177001953,\"gpsHeading\":19.119,\"speed\":71,\"satellites\":19,\"fixed\":true,\"hdop\":0.557,\"vdop\":0,\"ignitionON\":true,\"odometer\":9213,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-111,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714732716132,\"processTimestamp\":1714732723342,\"ttlTimestamp\":1714732723},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ0C32CZPTG8HMTE4HQX959\",\"messageType\":3,\"sequenceNumber\":74,\"date\":\"2024/05/03/10/35\",\"timestamp\":1714732534860,\"lastTimestampOfFix\":1714732534000,\"latitude\":-17.892082,\"longitude\":-39.817525,\"altitude\":72.10900115966797,\"gpsHeading\":30.375,\"speed\":30,\"satellites\":19,\"fixed\":true,\"hdop\":0.557,\"vdop\":0,\"ignitionON\":true,\"odometer\":5688,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-101,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714732536145,\"processTimestamp\":1714732544080,\"ttlTimestamp\":1714732544},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ06K9JZP1M51NRMR40V8E3\",\"messageType\":3,\"sequenceNumber\":73,\"date\":\"2024/05/03/10/32\",\"timestamp\":1714732354867,\"lastTimestampOfFix\":1714732354000,\"latitude\":-17.910327,\"longitude\":-39.828361,\"altitude\":73.7239990234375,\"gpsHeading\":97.488,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.629,\"vdop\":0,\"ignitionON\":true,\"odometer\":3336,\"vehicleBatteryVoltage\":28.394,\"backupBatteryVoltage\":28.394,\"connectionType\":17,\"signalStrength\":-113,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714732356189,\"processTimestamp\":1714732365175,\"ttlTimestamp\":1714732365},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ013GBTTFVB0RJCGH0G0M3\",\"messageType\":3,\"sequenceNumber\":71,\"date\":\"2024/05/03/10/29\",\"timestamp\":1714732174859,\"lastTimestampOfFix\":1714732174000,\"latitude\":-17.91069,\"longitude\":-39.828906,\"altitude\":78.69300079345703,\"gpsHeading\":33.486,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.595,\"vdop\":0,\"ignitionON\":true,\"odometer\":3255,\"vehicleBatteryVoltage\":25.786,\"backupBatteryVoltage\":25.786,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":546326,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714732175877,\"processTimestamp\":1714732182656,\"ttlTimestamp\":1714732182},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZND8RDAP4HFJHD3X5WMBA\",\"messageType\":3,\"sequenceNumber\":70,\"date\":\"2024/05/03/10/23\",\"timestamp\":1714731791640,\"lastTimestampOfFix\":1714731791000,\"latitude\":-17.91069,\"longitude\":-39.828906,\"altitude\":78.69300079345703,\"gpsHeading\":33.486,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.624,\"vdop\":0,\"ignitionON\":false,\"odometer\":3255,\"vehicleBatteryVoltage\":25.95,\"backupBatteryVoltage\":25.95,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":426774,\"locationAreaCode\":62073,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731796237,\"processTimestamp\":1714731802663,\"ttlTimestamp\":1714731802},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZC89PX8PPKJHAF75SVWHX\",\"messageType\":3,\"sequenceNumber\":69,\"date\":\"2024/05/03/10/18\",\"timestamp\":1714731491638,\"lastTimestampOfFix\":1714731491000,\"latitude\":-17.91069,\"longitude\":-39.828906,\"altitude\":78.69300079345703,\"gpsHeading\":33.486,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.6,\"vdop\":0,\"ignitionON\":false,\"odometer\":3255,\"vehicleBatteryVoltage\":27.83,\"backupBatteryVoltage\":27.83,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731492413,\"processTimestamp\":1714731499856,\"ttlTimestamp\":1714731499},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ7CG32J21Q248PPZ8XDPC\",\"messageType\":3,\"sequenceNumber\":67,\"date\":\"2024/05/03/10/15\",\"timestamp\":1714731332100,\"lastTimestampOfFix\":1714731331000,\"latitude\":-17.910553,\"longitude\":-39.828698,\"altitude\":76.04900360107422,\"gpsHeading\":250.368,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.628,\"vdop\":0,\"ignitionON\":true,\"odometer\":3163,\"vehicleBatteryVoltage\":26.232,\"backupBatteryVoltage\":26.232,\"connectionType\":17,\"signalStrength\":-115,\"mcc\":724,\"mnc\":11,\"cellId\":426774,\"locationAreaCode\":62073,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731332996,\"processTimestamp\":1714731339311,\"ttlTimestamp\":1714731339},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ5S7NYWPKRA0F9JVX3XHY\",\"messageType\":3,\"sequenceNumber\":65,\"date\":\"2024/05/03/10/14\",\"timestamp\":1714731279606,\"lastTimestampOfFix\":1714731279000,\"latitude\":-17.910553,\"longitude\":-39.828698,\"altitude\":76.04900360107422,\"gpsHeading\":250.368,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.621,\"vdop\":0,\"ignitionON\":true,\"odometer\":3163,\"vehicleBatteryVoltage\":28.089,\"backupBatteryVoltage\":28.089,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":426774,\"locationAreaCode\":62073,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731293727,\"processTimestamp\":1714731301615,\"ttlTimestamp\":1714731301},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ5S7NYWPKRA0F9JVX3XHY\",\"messageType\":3,\"sequenceNumber\":65,\"date\":\"2024/05/03/10/14\",\"timestamp\":1714731279606,\"lastTimestampOfFix\":1714731279000,\"latitude\":-17.910553,\"longitude\":-39.828698,\"altitude\":76.04900360107422,\"gpsHeading\":250.368,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.621,\"vdop\":0,\"ignitionON\":true,\"odometer\":3163,\"vehicleBatteryVoltage\":28.089,\"backupBatteryVoltage\":28.089,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":426774,\"locationAreaCode\":62073,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731293461,\"processTimestamp\":1714731301154,\"ttlTimestamp\":1714731301},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ668G8N7SQ3NSE46N9NBS\",\"messageType\":3,\"sequenceNumber\":66,\"date\":\"2024/05/03/10/14\",\"timestamp\":1714731292944,\"lastTimestampOfFix\":1714731292000,\"latitude\":-17.910553,\"longitude\":-39.828698,\"altitude\":76.04900360107422,\"gpsHeading\":250.368,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.648,\"vdop\":0,\"ignitionON\":false,\"odometer\":3163,\"vehicleBatteryVoltage\":26.961,\"backupBatteryVoltage\":26.961,\"connectionType\":17,\"signalStrength\":-118,\"mcc\":724,\"mnc\":11,\"cellId\":426774,\"locationAreaCode\":62073,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731293934,\"processTimestamp\":1714731301075,\"ttlTimestamp\":1714731301},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ0TSH75CD03VW16E3FB37\",\"messageType\":3,\"sequenceNumber\":64,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731117365,\"lastTimestampOfFix\":1714731117000,\"latitude\":-17.902345,\"longitude\":-39.822962,\"altitude\":54.42599868774414,\"gpsHeading\":211.675,\"speed\":70,\"satellites\":16,\"fixed\":true,\"hdop\":0.628,\"vdop\":0,\"ignitionON\":true,\"odometer\":2042,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731121123,\"processTimestamp\":1714731128543,\"ttlTimestamp\":1714731128},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ0QS5KE68PVP33MMAAV7J\",\"messageType\":3,\"sequenceNumber\":63,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731114277,\"lastTimestampOfFix\":1714731114000,\"latitude\":-17.901883,\"longitude\":-39.822672,\"altitude\":54.183998107910156,\"gpsHeading\":211.487,\"speed\":70,\"satellites\":18,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":1983,\"vehicleBatteryVoltage\":28.159,\"backupBatteryVoltage\":28.159,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731116755,\"processTimestamp\":1714731124108,\"ttlTimestamp\":1714731124},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ0QFSMCBQAQXNFPJA3JXR\",\"messageType\":3,\"sequenceNumber\":62,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731113977,\"lastTimestampOfFix\":1714731113000,\"latitude\":-17.901723,\"longitude\":-39.822579,\"altitude\":53.972999572753906,\"gpsHeading\":211.229,\"speed\":71,\"satellites\":17,\"fixed\":true,\"hdop\":0.619,\"vdop\":0,\"ignitionON\":true,\"odometer\":1963,\"vehicleBatteryVoltage\":28.159,\"backupBatteryVoltage\":28.159,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731116486,\"processTimestamp\":1714731124080,\"ttlTimestamp\":1714731124},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ0PVCGQWPCHXH72EAEN5V\",\"messageType\":3,\"sequenceNumber\":61,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731113324,\"lastTimestampOfFix\":1714731113000,\"latitude\":-17.901723,\"longitude\":-39.822579,\"altitude\":53.972999572753906,\"gpsHeading\":211.229,\"speed\":71,\"satellites\":17,\"fixed\":true,\"hdop\":0.619,\"vdop\":0,\"ignitionON\":true,\"odometer\":1963,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731116194,\"processTimestamp\":1714731123786,\"ttlTimestamp\":1714731123},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYZ09ENMBEH2NKGXQBJ7Y6S\",\"messageType\":3,\"sequenceNumber\":60,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731099605,\"lastTimestampOfFix\":1714731099000,\"latitude\":-17.899546,\"longitude\":-39.821158,\"altitude\":60.979000091552734,\"gpsHeading\":211.051,\"speed\":71,\"satellites\":17,\"fixed\":true,\"hdop\":0.608,\"vdop\":0,\"ignitionON\":true,\"odometer\":1678,\"vehicleBatteryVoltage\":28.23,\"backupBatteryVoltage\":28.23,\"connectionType\":17,\"signalStrength\":-96,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731101108,\"processTimestamp\":1714731106829,\"ttlTimestamp\":1714731106},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYZJ2B8FWCVX2PPXYKJT1Z\",\"messageType\":3,\"sequenceNumber\":59,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731075660,\"lastTimestampOfFix\":1714731075000,\"latitude\":-17.895619,\"longitude\":-39.819284,\"altitude\":65.98699951171875,\"gpsHeading\":201.651,\"speed\":66,\"satellites\":18,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":1200,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-101,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731076371,\"processTimestamp\":1714731084405,\"ttlTimestamp\":1714731084},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYZHKNYSQ38BFRV7GCKRXM\",\"messageType\":3,\"sequenceNumber\":58,\"date\":\"2024/05/03/10/11\",\"timestamp\":1714731075189,\"lastTimestampOfFix\":1714731075000,\"latitude\":-17.895619,\"longitude\":-39.819284,\"altitude\":65.98699951171875,\"gpsHeading\":201.651,\"speed\":66,\"satellites\":18,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":1200,\"vehicleBatteryVoltage\":28.136,\"backupBatteryVoltage\":28.136,\"connectionType\":17,\"signalStrength\":-101,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714731076115,\"processTimestamp\":1714731083770,\"ttlTimestamp\":1714731083},\"telemetryEvent\":{\"telemetryEventType\":7,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYTSNND5JHE9Z9Q1MTMH5D\",\"messageType\":3,\"sequenceNumber\":57,\"date\":\"2024/05/03/10/08\",\"timestamp\":1714730919605,\"lastTimestampOfFix\":1714730919000,\"latitude\":-17.892675,\"longitude\":-39.81542,\"altitude\":75.47599792480469,\"gpsHeading\":51.91,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.606,\"vdop\":0,\"ignitionON\":true,\"odometer\":270,\"vehicleBatteryVoltage\":28.042,\"backupBatteryVoltage\":28.042,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714730921210,\"processTimestamp\":1714730928521,\"ttlTimestamp\":1714730928},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYN9WN9NW3NZCYY6N24GPQ\",\"messageType\":3,\"sequenceNumber\":56,\"date\":\"2024/05/03/10/05\",\"timestamp\":1714730739605,\"lastTimestampOfFix\":1714730739000,\"latitude\":-17.892675,\"longitude\":-39.81542,\"altitude\":75.47599792480469,\"gpsHeading\":51.91,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.617,\"vdop\":0,\"ignitionON\":true,\"odometer\":270,\"vehicleBatteryVoltage\":28.159,\"backupBatteryVoltage\":28.159,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714730741219,\"processTimestamp\":1714730749131,\"ttlTimestamp\":1714730749},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYFT3N1VJM7KQKV2EVF28J\",\"messageType\":3,\"sequenceNumber\":54,\"date\":\"2024/05/03/10/02\",\"timestamp\":1714730559605,\"lastTimestampOfFix\":1714730559000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.634,\"vdop\":0,\"ignitionON\":true,\"odometer\":244,\"vehicleBatteryVoltage\":28.018,\"backupBatteryVoltage\":28.018,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714730561096,\"processTimestamp\":1714730568244,\"ttlTimestamp\":1714730568},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYYAAAXE54XEP7EPA1JR3T6\",\"messageType\":3,\"sequenceNumber\":53,\"date\":\"2024/05/03/09/59\",\"timestamp\":1714730379613,\"lastTimestampOfFix\":1714730379000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.765,\"vdop\":0,\"ignitionON\":true,\"odometer\":244,\"vehicleBatteryVoltage\":28.159,\"backupBatteryVoltage\":28.159,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714730381138,\"processTimestamp\":1714730388733,\"ttlTimestamp\":1714730388},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYY4THKRPKAD1GXSDVEGP41\",\"messageType\":3,\"sequenceNumber\":52,\"date\":\"2024/05/03/09/56\",\"timestamp\":1714730199603,\"lastTimestampOfFix\":1714730199000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.7,\"vdop\":0,\"ignitionON\":true,\"odometer\":244,\"vehicleBatteryVoltage\":24.799,\"backupBatteryVoltage\":24.799,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714730200558,\"processTimestamp\":1714730208052,\"ttlTimestamp\":1714730208},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYVMDMXBYREX6MDKBV1JYKN\",\"messageType\":3,\"sequenceNumber\":51,\"date\":\"2024/05/03/09/12\",\"timestamp\":1714727564957,\"lastTimestampOfFix\":1714727564000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.647,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":24.987,\"backupBatteryVoltage\":24.987,\"connectionType\":17,\"signalStrength\":-108,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714727566191,\"processTimestamp\":1714727573325,\"ttlTimestamp\":1714727573},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYR6J0X27ERTJ3HV1ABHSBE\",\"messageType\":3,\"sequenceNumber\":50,\"date\":\"2024/05/03/08/12\",\"timestamp\":1714723964957,\"lastTimestampOfFix\":1714723964000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.687,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.034,\"backupBatteryVoltage\":25.034,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714723966198,\"processTimestamp\":1714723974107,\"ttlTimestamp\":1714723974},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYMRPCXDDJGBT1409H7RE30\",\"messageType\":3,\"sequenceNumber\":49,\"date\":\"2024/05/03/07/12\",\"timestamp\":1714720364957,\"lastTimestampOfFix\":1714720364000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.845,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.034,\"backupBatteryVoltage\":25.034,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714720366182,\"processTimestamp\":1714720372862,\"ttlTimestamp\":1714720372},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYHATRXJMGVTPDQ6480VHBD\",\"messageType\":3,\"sequenceNumber\":46,\"date\":\"2024/05/03/06/12\",\"timestamp\":1714716764957,\"lastTimestampOfFix\":1714716764000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.663,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.034,\"backupBatteryVoltage\":25.034,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714716766206,\"processTimestamp\":1714716773950,\"ttlTimestamp\":1714716773},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYDWZ4XDKV218M1JBHGAQG7\",\"messageType\":3,\"sequenceNumber\":45,\"date\":\"2024/05/03/05/12\",\"timestamp\":1714713164957,\"lastTimestampOfFix\":1714713164000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.627,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.104,\"backupBatteryVoltage\":25.104,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714713166216,\"processTimestamp\":1714713173772,\"ttlTimestamp\":1714713173},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWYAF3GXMRMA7R4CK06XC2K7\",\"messageType\":3,\"sequenceNumber\":44,\"date\":\"2024/05/03/04/12\",\"timestamp\":1714709564957,\"lastTimestampOfFix\":1714709564000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":20,\"fixed\":true,\"hdop\":0.535,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.128,\"backupBatteryVoltage\":25.128,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714709566201,\"processTimestamp\":1714709573652,\"ttlTimestamp\":1714709573},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWY717WXTP3QKZ18R6JD6BYN\",\"messageType\":3,\"sequenceNumber\":43,\"date\":\"2024/05/03/03/12\",\"timestamp\":1714705964957,\"lastTimestampOfFix\":1714705964000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.633,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.151,\"backupBatteryVoltage\":25.151,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714705966235,\"processTimestamp\":1714705973822,\"ttlTimestamp\":1714705973},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWY3KC8XAFQQ1GKPS9D0NT1Z\",\"messageType\":3,\"sequenceNumber\":42,\"date\":\"2024/05/03/02/12\",\"timestamp\":1714702364957,\"lastTimestampOfFix\":1714702364000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.794,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.175,\"backupBatteryVoltage\":25.175,\"connectionType\":17,\"signalStrength\":-108,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714702366285,\"processTimestamp\":1714702374033,\"ttlTimestamp\":1714702374},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWY05GMXCGCE4F1VRA3D7Q8E\",\"messageType\":3,\"sequenceNumber\":41,\"date\":\"2024/05/03/01/12\",\"timestamp\":1714698764957,\"lastTimestampOfFix\":1714698764000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.813,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.198,\"backupBatteryVoltage\":25.198,\"connectionType\":17,\"signalStrength\":-108,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714698766327,\"processTimestamp\":1714698772560,\"ttlTimestamp\":1714698772},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXWQN0XMRT5T6JH4WV2R316\",\"messageType\":3,\"sequenceNumber\":40,\"date\":\"2024/05/03/00/12\",\"timestamp\":1714695164957,\"lastTimestampOfFix\":1714695164000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.618,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.222,\"backupBatteryVoltage\":25.222,\"connectionType\":17,\"signalStrength\":-108,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714695166245,\"processTimestamp\":1714695175934,\"ttlTimestamp\":1714695175},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXS9SCXGCF7V428YWTSMSRY\",\"messageType\":3,\"sequenceNumber\":39,\"date\":\"2024/05/02/23/12\",\"timestamp\":1714691564957,\"lastTimestampOfFix\":1714691564000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.622,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.222,\"backupBatteryVoltage\":25.222,\"connectionType\":17,\"signalStrength\":-108,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714691566205,\"processTimestamp\":1714691572889,\"ttlTimestamp\":1714691572},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXNVXRX3YTE3MEJE90RCF0T\",\"messageType\":3,\"sequenceNumber\":38,\"date\":\"2024/05/02/22/12\",\"timestamp\":1714687964957,\"lastTimestampOfFix\":1714687964000,\"latitude\":-17.892884,\"longitude\":-39.815422,\"altitude\":88.80500030517578,\"gpsHeading\":72.46,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.624,\"vdop\":0,\"ignitionON\":false,\"odometer\":244,\"vehicleBatteryVoltage\":25.269,\"backupBatteryVoltage\":25.269,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714687966238,\"processTimestamp\":1714687972359,\"ttlTimestamp\":1714687972},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXJE24X0NE697AWXTZN0RB5\",\"messageType\":3,\"sequenceNumber\":37,\"date\":\"2024/05/02/21/12\",\"timestamp\":1714684364957,\"lastTimestampOfFix\":1714684364000,\"latitude\":-17.893049,\"longitude\":-39.815294,\"altitude\":69.14800262451172,\"gpsHeading\":27.265,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.599,\"vdop\":0,\"ignitionON\":false,\"odometer\":221,\"vehicleBatteryVoltage\":25.292,\"backupBatteryVoltage\":25.292,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714684366202,\"processTimestamp\":1714684372287,\"ttlTimestamp\":1714684372},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXF06GXXRE6SCBGB18YKWDF\",\"messageType\":3,\"sequenceNumber\":36,\"date\":\"2024/05/02/20/12\",\"timestamp\":1714680764957,\"lastTimestampOfFix\":1714680764000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":27.265,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.675,\"vdop\":0,\"ignitionON\":false,\"odometer\":196,\"vehicleBatteryVoltage\":25.339,\"backupBatteryVoltage\":25.339,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714680766293,\"processTimestamp\":1714680774491,\"ttlTimestamp\":1714680774},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWXBJAWXRNKH5AYZMDR6EYK5\",\"messageType\":3,\"sequenceNumber\":35,\"date\":\"2024/05/02/19/12\",\"timestamp\":1714677164957,\"lastTimestampOfFix\":1714677164000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":27.265,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.655,\"vdop\":0,\"ignitionON\":false,\"odometer\":196,\"vehicleBatteryVoltage\":25.386,\"backupBatteryVoltage\":25.386,\"connectionType\":17,\"signalStrength\":-110,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714677166243,\"processTimestamp\":1714677172322,\"ttlTimestamp\":1714677172},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX84F8XST01A0GWKWF4H37B\",\"messageType\":3,\"sequenceNumber\":34,\"date\":\"2024/05/02/18/12\",\"timestamp\":1714673564957,\"lastTimestampOfFix\":1714673564000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":176.752,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.666,\"vdop\":0,\"ignitionON\":false,\"odometer\":196,\"vehicleBatteryVoltage\":25.386,\"backupBatteryVoltage\":25.386,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714673566235,\"processTimestamp\":1714673573645,\"ttlTimestamp\":1714673573},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX4PKMYKEPH87QG242DKGDK\",\"messageType\":3,\"sequenceNumber\":33,\"date\":\"2024/05/02/17/12\",\"timestamp\":1714669964959,\"lastTimestampOfFix\":1714669964000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":176.752,\"speed\":0,\"satellites\":18,\"fixed\":true,\"hdop\":0.586,\"vdop\":0,\"ignitionON\":false,\"odometer\":196,\"vehicleBatteryVoltage\":26.044,\"backupBatteryVoltage\":26.044,\"connectionType\":17,\"signalStrength\":-109,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714669966208,\"processTimestamp\":1714669972772,\"ttlTimestamp\":1714669972},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX4DENW30ACC9CDBW2EWFJ3\",\"messageType\":3,\"sequenceNumber\":32,\"date\":\"2024/05/02/17/07\",\"timestamp\":1714669664956,\"lastTimestampOfFix\":1714669664000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":176.752,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.663,\"vdop\":0,\"ignitionON\":false,\"odometer\":196,\"vehicleBatteryVoltage\":26.984,\"backupBatteryVoltage\":26.984,\"connectionType\":17,\"signalStrength\":-109,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714669665834,\"processTimestamp\":1714669673775,\"ttlTimestamp\":1714669673},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX4CK7TN5KPQMM5XG1DE19Q\",\"messageType\":3,\"sequenceNumber\":31,\"date\":\"2024/05/02/17/07\",\"timestamp\":1714669636859,\"lastTimestampOfFix\":1714669636000,\"latitude\":-17.892847,\"longitude\":-39.815399,\"altitude\":88.9209976196289,\"gpsHeading\":187.244,\"speed\":1,\"satellites\":17,\"fixed\":true,\"hdop\":0.651,\"vdop\":0,\"ignitionON\":true,\"odometer\":196,\"vehicleBatteryVoltage\":28.183,\"backupBatteryVoltage\":28.183,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714669641189,\"processTimestamp\":1714669647362,\"ttlTimestamp\":1714669647},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX473F53T2GVCBN619TG5QD\",\"messageType\":3,\"sequenceNumber\":30,\"date\":\"2024/05/02/17/04\",\"timestamp\":1714669456874,\"lastTimestampOfFix\":1714669456000,\"latitude\":-17.893019,\"longitude\":-39.815583,\"altitude\":81.59700012207031,\"gpsHeading\":27.169,\"speed\":1,\"satellites\":17,\"fixed\":true,\"hdop\":0.601,\"vdop\":0,\"ignitionON\":true,\"odometer\":111,\"vehicleBatteryVoltage\":28.206,\"backupBatteryVoltage\":28.206,\"connectionType\":17,\"signalStrength\":-110,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714669461286,\"processTimestamp\":1714669468897,\"ttlTimestamp\":1714669468},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX41KNT64AG1ZZY6JKK8VXS\",\"messageType\":3,\"sequenceNumber\":28,\"date\":\"2024/05/02/17/01\",\"timestamp\":1714669276858,\"lastTimestampOfFix\":1714669276000,\"latitude\":-17.893019,\"longitude\":-39.815583,\"altitude\":81.59700012207031,\"gpsHeading\":201.211,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.689,\"vdop\":0,\"ignitionON\":true,\"odometer\":111,\"vehicleBatteryVoltage\":25.292,\"backupBatteryVoltage\":25.292,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714669277768,\"processTimestamp\":1714669283077,\"ttlTimestamp\":1714669283},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWX17ENSX7SYMVW2YGQWN18X\",\"messageType\":3,\"sequenceNumber\":27,\"date\":\"2024/05/02/16/12\",\"timestamp\":1714666322618,\"lastTimestampOfFix\":1714666322000,\"latitude\":-17.893019,\"longitude\":-39.815583,\"altitude\":81.59700012207031,\"gpsHeading\":201.211,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.617,\"vdop\":0,\"ignitionON\":false,\"odometer\":111,\"vehicleBatteryVoltage\":25.48,\"backupBatteryVoltage\":25.48,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714666326216,\"processTimestamp\":1714666333984,\"ttlTimestamp\":1714666333},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWXSK1SD73MSJN5EMJDSBQD\",\"messageType\":3,\"sequenceNumber\":26,\"date\":\"2024/05/02/15/12\",\"timestamp\":1714662722618,\"lastTimestampOfFix\":1714662722000,\"latitude\":-17.893019,\"longitude\":-39.815583,\"altitude\":81.59700012207031,\"gpsHeading\":201.211,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.705,\"vdop\":0,\"ignitionON\":false,\"odometer\":111,\"vehicleBatteryVoltage\":25.645,\"backupBatteryVoltage\":25.645,\"connectionType\":17,\"signalStrength\":-106,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714662726211,\"processTimestamp\":1714662733990,\"ttlTimestamp\":1714662733},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWTBQDSMWPHRPWW6PEVB3FV\",\"messageType\":3,\"sequenceNumber\":25,\"date\":\"2024/05/02/14/12\",\"timestamp\":1714659122618,\"lastTimestampOfFix\":1714659122000,\"latitude\":-17.892841,\"longitude\":-39.815483,\"altitude\":77.76699829101562,\"gpsHeading\":201.211,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.621,\"vdop\":0,\"ignitionON\":false,\"odometer\":88,\"vehicleBatteryVoltage\":25.974,\"backupBatteryVoltage\":25.974,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714659126218,\"processTimestamp\":1714659133435,\"ttlTimestamp\":1714659133},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWT2JES3NP3GHRY0QY1P8HE\",\"messageType\":3,\"sequenceNumber\":24,\"date\":\"2024/05/02/14/07\",\"timestamp\":1714658822617,\"lastTimestampOfFix\":1714658822000,\"latitude\":-17.892841,\"longitude\":-39.815483,\"altitude\":77.76699829101562,\"gpsHeading\":201.211,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.686,\"vdop\":0,\"ignitionON\":false,\"odometer\":88,\"vehicleBatteryVoltage\":28.606,\"backupBatteryVoltage\":28.606,\"connectionType\":17,\"signalStrength\":-107,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714658823388,\"processTimestamp\":1714658830491,\"ttlTimestamp\":1714658830},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWSZ0E49M1R0C1QC9Q3ZQVS\",\"messageType\":3,\"sequenceNumber\":22,\"date\":\"2024/05/02/14/05\",\"timestamp\":1714658705860,\"lastTimestampOfFix\":1714658705000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.607,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":25.927,\"backupBatteryVoltage\":25.927,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714658706258,\"processTimestamp\":1714658712227,\"ttlTimestamp\":1714658712},\"telemetryEvent\":{\"telemetryEventType\":1,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWSV776J31ABVEFDQPESK67\",\"messageType\":3,\"sequenceNumber\":21,\"date\":\"2024/05/02/14/03\",\"timestamp\":1714658581735,\"lastTimestampOfFix\":1714658581000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.649,\"vdop\":0,\"ignitionON\":false,\"odometer\":10,\"vehicleBatteryVoltage\":26.021,\"backupBatteryVoltage\":26.021,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714658586207,\"processTimestamp\":1714658593722,\"ttlTimestamp\":1714658593},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWSJ287T9BJZBDTB2DSA97H\",\"messageType\":3,\"sequenceNumber\":20,\"date\":\"2024/05/02/13/58\",\"timestamp\":1714658281735,\"lastTimestampOfFix\":1714658281000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.654,\"vdop\":0,\"ignitionON\":false,\"odometer\":10,\"vehicleBatteryVoltage\":27.125,\"backupBatteryVoltage\":27.125,\"connectionType\":17,\"signalStrength\":-103,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714658282975,\"processTimestamp\":1714658290854,\"ttlTimestamp\":1714658290},\"telemetryEvent\":{\"telemetryEventType\":2,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWSD59YXY2Q7P9B51NHVAPG\",\"messageType\":3,\"sequenceNumber\":19,\"date\":\"2024/05/02/13/55\",\"timestamp\":1714658121023,\"lastTimestampOfFix\":1714658120000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.654,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.277,\"backupBatteryVoltage\":28.277,\"connectionType\":17,\"signalStrength\":-103,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714658126213,\"processTimestamp\":1714658133518,\"ttlTimestamp\":1714658133},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWS7NGY178FGTM428YKD6JC\",\"messageType\":3,\"sequenceNumber\":18,\"date\":\"2024/05/02/13/52\",\"timestamp\":1714657941028,\"lastTimestampOfFix\":1714657940000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":16,\"fixed\":true,\"hdop\":0.613,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.23,\"backupBatteryVoltage\":28.23,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657946289,\"processTimestamp\":1714657953438,\"ttlTimestamp\":1714657953},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWS25R4QBH8D8YZAKTFHGCF\",\"messageType\":3,\"sequenceNumber\":17,\"date\":\"2024/05/02/13/49\",\"timestamp\":1714657761028,\"lastTimestampOfFix\":1714657760000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.621,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.23,\"backupBatteryVoltage\":28.23,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657766240,\"processTimestamp\":1714657772592,\"ttlTimestamp\":1714657772},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWRWNZ6N3AC4R9982G3T0NB\",\"messageType\":3,\"sequenceNumber\":16,\"date\":\"2024/05/02/13/46\",\"timestamp\":1714657581032,\"lastTimestampOfFix\":1714657580000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.656,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.3,\"backupBatteryVoltage\":28.3,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657586254,\"processTimestamp\":1714657593206,\"ttlTimestamp\":1714657593},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWRQ663JK4Z59P46P0X4M29\",\"messageType\":3,\"sequenceNumber\":15,\"date\":\"2024/05/02/13/43\",\"timestamp\":1714657401028,\"lastTimestampOfFix\":1714657400000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.658,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.324,\"backupBatteryVoltage\":28.324,\"connectionType\":17,\"signalStrength\":-103,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657406239,\"processTimestamp\":1714657413602,\"ttlTimestamp\":1714657413},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWRHPCY16ESPBJMJJKHGRKK\",\"messageType\":3,\"sequenceNumber\":14,\"date\":\"2024/05/02/13/40\",\"timestamp\":1714657221023,\"lastTimestampOfFix\":1714657220000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.659,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.347,\"backupBatteryVoltage\":28.347,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657226236,\"processTimestamp\":1714657233557,\"ttlTimestamp\":1714657233},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWRC6M5FRC4F93R8MTB5M9P\",\"messageType\":3,\"sequenceNumber\":13,\"date\":\"2024/05/02/13/37\",\"timestamp\":1714657041031,\"lastTimestampOfFix\":1714657040000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.661,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.253,\"backupBatteryVoltage\":28.253,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714657046226,\"processTimestamp\":1714657053923,\"ttlTimestamp\":1714657053},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWR6PV4NWWQC73W0WVZSYC4\",\"messageType\":3,\"sequenceNumber\":12,\"date\":\"2024/05/02/13/34\",\"timestamp\":1714656861028,\"lastTimestampOfFix\":1714656860000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.663,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714656866398,\"processTimestamp\":1714656873512,\"ttlTimestamp\":1714656873},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWR1723CEAMK57RWNGNGC7Z\",\"messageType\":3,\"sequenceNumber\":11,\"date\":\"2024/05/02/13/31\",\"timestamp\":1714656681028,\"lastTimestampOfFix\":1714656680000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.665,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714656686226,\"processTimestamp\":1714656694483,\"ttlTimestamp\":1714656694},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQVQ8Z5ZG526KH5EW77YY9\",\"messageType\":3,\"sequenceNumber\":10,\"date\":\"2024/05/02/13/28\",\"timestamp\":1714656501028,\"lastTimestampOfFix\":1714656500000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.692,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714656506241,\"processTimestamp\":1714656513814,\"ttlTimestamp\":1714656513},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQP7FZV89S5N88YZEEX2E0\",\"messageType\":3,\"sequenceNumber\":9,\"date\":\"2024/05/02/13/25\",\"timestamp\":1714656321023,\"lastTimestampOfFix\":1714656320000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.669,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.183,\"backupBatteryVoltage\":28.183,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714656326254,\"processTimestamp\":1714656334532,\"ttlTimestamp\":1714656334},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQGQQ31B3J0PT46SK7F7MV\",\"messageType\":3,\"sequenceNumber\":8,\"date\":\"2024/05/02/13/22\",\"timestamp\":1714656141028,\"lastTimestampOfFix\":1714656140000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":14,\"fixed\":true,\"hdop\":0.72,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.089,\"backupBatteryVoltage\":28.089,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714656146258,\"processTimestamp\":1714656154021,\"ttlTimestamp\":1714656154},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQB7Y31V5PY5HPECYPGQ9C\",\"messageType\":3,\"sequenceNumber\":7,\"date\":\"2024/05/02/13/19\",\"timestamp\":1714655961028,\"lastTimestampOfFix\":1714655960000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.671,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.206,\"backupBatteryVoltage\":28.206,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714655966276,\"processTimestamp\":1714655973355,\"ttlTimestamp\":1714655973},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQ5R4Y170BKPQGNBZKF6V9\",\"messageType\":3,\"sequenceNumber\":6,\"date\":\"2024/05/02/13/16\",\"timestamp\":1714655781023,\"lastTimestampOfFix\":1714655780000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.673,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":28.277,\"backupBatteryVoltage\":28.277,\"connectionType\":17,\"signalStrength\":-104,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714655786255,\"processTimestamp\":1714655792791,\"ttlTimestamp\":1714655792},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n,{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWWQ08CP0Z3MCPEETZ9PG83A\",\"messageType\":3,\"sequenceNumber\":5,\"date\":\"2024/05/02/13/13\",\"timestamp\":1714655601051,\"lastTimestampOfFix\":1714655600000,\"latitude\":-17.892796,\"longitude\":-39.81569,\"altitude\":94.95999908447266,\"gpsHeading\":0,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.673,\"vdop\":0,\"ignitionON\":true,\"odometer\":10,\"vehicleBatteryVoltage\":24.94,\"backupBatteryVoltage\":24.94,\"connectionType\":17,\"signalStrength\":-105,\"mcc\":724,\"mnc\":11,\"cellId\":546325,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":1,\"files\":null,\"receivedTimestamp\":1714655606245,\"processTimestamp\":1714655612194,\"ttlTimestamp\":1714655612},\"telemetryEvent\":{\"telemetryEventType\":3,\"maxSpeedExceeded\":false}} \r\n\r\n],\r\n    \"visionEvents\":[\r\n{\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ2Y9DCQ0SQTY1WYB7FSTH9\",\"messageType\":3,\"sequenceNumber\":92,\"date\":\"2024/05/03/11/20\",\"timestamp\":1714735227494,\"lastTimestampOfFix\":1714735228000,\"latitude\":-17.59189,\"longitude\":-39.738439,\"altitude\":100.76599884033203,\"gpsHeading\":115.411,\"speed\":0,\"satellites\":17,\"fixed\":true,\"hdop\":0.604,\"vdop\":0,\"ignitionON\":true,\"odometer\":44021,\"vehicleBatteryVoltage\":28.112,\"backupBatteryVoltage\":28.112,\"connectionType\":17,\"signalStrength\":-88,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":2,\"files\":[{\"filename\":\"01GZXXCVVPEKM7E830XAMJKA14/862798051840680/01HWZ2Y9DCQ0SQTY1WYB7FSTH9_image0.jpg\",\"bucket\":\"573598560824-prod-device-faces\",\"type\":\"image\"}],\"receivedTimestamp\":1714735231156,\"processTimestamp\":1714735238003,\"ttlTimestamp\":1714735238},\"visionEvent\":{\"timestamp\":1714735227494,\"visionEventType\":12,\"fps\":1.4306152,\"neutralHeadposePitch\":-0.0518853,\"neutralHeadposeYaw\":6.69757,\"neutralHeadposeRoll\":-0.645311,\"gazeConfidence\":-0.009114921,\"faceConfidence\":0.9111411,\"maskConfidence\":0.002803684,\"glassesConfidence\":2.1046e-15,\"perclos\":-1,\"blinksPerMin\":-1,\"leftEyeClosureTime\":-1,\"rightEyeClosureTime\":0,\"maskDetected\":true,\"glassesDetected\":true,\"boundingBoxes\":[{\"x\":0.87955695,\"y\":0.28727156,\"width\":0.118971065,\"height\":0.3045539,\"isDriver\":true}]}}\r\n    ],\r\n    \"hardwareEvents\":[\r\n        {\"body\":{\"deviceSource\":\"862798051840680\",\"account\":\"01GZXXCVVPEKM7E830XAMJKA14\",\"deviceDestination\":\"189.85.146.200:9010\",\"ulid\":\"01HWZ9SQAWZJ8TQCRE5PDM3A3K\",\"messageType\":3,\"sequenceNumber\":107,\"date\":\"2024/05/03/13/20\",\"timestamp\":1714742418781,\"lastTimestampOfFix\":1714742418000,\"latitude\":-17.592457,\"longitude\":-39.738047,\"altitude\":103.83499908447266,\"gpsHeading\":44.606,\"speed\":0,\"satellites\":15,\"fixed\":true,\"hdop\":0.661,\"vdop\":0,\"ignitionON\":false,\"odometer\":44232,\"vehicleBatteryVoltage\":25.645,\"backupBatteryVoltage\":25.645,\"connectionType\":17,\"signalStrength\":-86,\"mcc\":724,\"mnc\":11,\"cellId\":622870,\"locationAreaCode\":50173,\"timingAdvance\":2147483647,\"eventType\":3,\"files\":null,\"receivedTimestamp\":1714742421341,\"processTimestamp\":1714742427486,\"ttlTimestamp\":1714742427},\"hardwareEvent\":{\"hardwareEventType\":9,\"hardwareModel\":\"JC400\",\"vehicleBatteryConnected\":false,\"pid\":{\"br.com.v3.r2\":1524},\"version\":{\"br.com.v3.r2\":\"1.16.7\"},\"firmwareVersion\":\"KMC28_JC400_WABA_GOL_V1.1.7_240112.1846\",\"timeSinceBoot\":-45689512,\"iccId\":\"89550680257010662709\",\"details\":{\"orderResponse\":\"\"},\"originalUlid\":\"01HWZ9S8B5WW0J16S0RX6G4JK2\"}}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/reinsert/events/dynamo",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"reinsert",
+								"events",
+								"dynamo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReInsert Events CloudWatch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountUlid\":\"\",\r\n    \"deviceSources\": [\"teste\",\"teste2\"],\r\n    \"startTime\":\"01/01/2024 00:00:00\",\r\n    \"endTime\": \"02/01/2024 00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/events/reinsert/events/cloudwatch",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"events",
+								"reinsert",
+								"events",
+								"cloudwatch"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Face",
+			"item": [
+				{
+					"name": "Get The Latest Face Events",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Recebe os últimos eventos de VISÃO do device, podendo ou não conter um reconhecimento.\r\n// Caso você envie o ULID de um evento dentro deste array de items, ele será removido (processado) desta lista de retorno, sendo consumido.\r\n// Neste ambiente, não há consumo real de eventos, apenas uma simulação.\r\n// São disponibilizados 3 ulids (\"TPGPGWHGDYQDSJ5G1HKV1902\", \"GCGR3RNHE6MYNBGDFXBJBD2K\", \"HJGR3RP5QPY9R1T1E3ZCPF1D\") para teste exemplificação de eventos, basta remover as // para validar o processo de consumo.\r\n{\r\n    \"items\":[\"TPGPGWHGDYQDSJ5G1HKV1902\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/latest",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Face Recognition Trigger",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Essa função permite o reconhecimento em diversos teams, informados no corpo da requisição. \r\n// É necessario que o device esteja configurado para reconhecimento manual para utilização desta API.\r\n{\r\n    \"eventulid\": \"01HPEVC9G14GDZD6AB2XTFQKPR\",\r\n    \"devicesource\" : \"123456789\",\r\n    \"teamulids\": [\"01H0MT3PK4H9ZTXVHWV8FJW8NA\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/recognition",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"recognition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get The Face Events From Devices By Time",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "inithour",
+								"value": "15/05/2023 11:36:00",
+								"type": "text"
+							},
+							{
+								"key": "endhour",
+								"value": "15/05/2023 11:37:00",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Endpoint que retorna uma lista de eventos de visão de acordo com o tempo e data passado no header da requisição, o intervalo máximo é de 1 hora, estes eventos podem ou não conter um reconhecimento facial.\n//Para exemplificação, disponibilizamos este devicesource: 862798050576806 contendo 3 eventos, sendo o último, um de reconhecimento facial.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/devices/862798050576806/face/search/time",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"devices",
+								"862798050576806",
+								"face",
+								"search",
+								"time"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index Driver Face",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Endpoint utilizado para indexar uma foto a um driver, é utilizado para \"treinar\" a inteligencia artificial a associar o reconhecimento de um driver com as fotos fornecidas no objectkeys.\r\n// Neste ambiente simulamos as duas possíveis resposta de processado e não processados de forma aleatória.\r\n{\r\n    \"driverulid\": \"01HRYXCV9PNVZRSEFR12JZEX6D\",\r\n    \"objectkeys\":[\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01H75WY6MSGAVSE7DQXV3A4Z7G_cam01.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8D5GYKZCW5XKZR3VVASJ9S_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8HFBE6P340JY06722K7V8T_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8HH7PP83NTV3MFSKVSENPN_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8HPWDDE9YYJ0AX9W3GV68D_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8HWNNVWE3JP464KZCHWQDQ_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8HXQAM93727923E67PZ6X2_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8JQ4A2NQW359F2PTCAKCQK_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8N9RQSVR7Y6FXY08SFQDVG_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ8RKTK4DH2SZG51WQ3SJ1MT_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ93TWEDW1Z1QMSWYDP8KHNM_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ942M43914DZA6DAGHRAF1S_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ94T9D7FC8HC3SKZY5EJ2CD_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ9567AM0YH2XP4MVXYT5SVS_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HJ95EY0AB79WM3JQ6ZZ5RQAN_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HKSF9TXAKV2BF29HYK47QPMY_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HMGYK9BH9ZXH3Q9297CDWTA3_image01.jpg\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HMKDT54MKGP0K0G9PN7C28C8_image0.jpeg\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HMKDT54MKGP0K0G9PN7C28C8_image01.jpeg\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HNZKEJEBKY79Z0Y583AFHG97_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP26EKRVEVA193E9V45KDJY3_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP26KQ3C3MG6M1NJN8ABC86J_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP26PCWVSQ79D8T8JAHVXMZH_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP26SDFVN3DXGV7ZDJ9T2DDC_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP270Q4N4YV3QNBY1NKYJWC2_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP27G9XMC6GJBJBT9EC04NQK_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP2DP9ZXS8XPY0RPEENY9E6P_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP2E2PX0040ZPTPJ60TRY65T_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP2E3AKF22MZ51KS4SXMKQMV_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP2ER5J3Q8JWPCCEHSE68749_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP2FBF2AYEA65P0M5JS0K81G_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP40TBFM76X8GEH9G04QA540_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4B1VR3XZE0K97D20PDCKTX_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BBMH41CGTCGEGAK4P39MQ_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BD95X59MBJ0CHAFWZ0YHB_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BEMNN4ZXRRBSKJKT9N7GP_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BG1TKZ11B96HD005F4P2S_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BM45BN5SD362VRMH96VNQ_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4BYH5YY354AZ8CQNDB042G_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4C8V4EDK3Z9HF5B6C39XW5_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4CG3T9YN2VF5YQ9DR4DJF9_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4P1Q8A1N0GG278SQKEP0BW_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4PDYXHW7E4ZJJB44G4Y7ZZ_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4PJ9HHYWCKT91BQ4NR2D01_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4PM69J41NQNJ2SS2XHRPR3_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4PZ7W7WCSHJZDGJQEFVKXF_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4Q0X41YF1WDNYEGFTRFYX8_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4Q1JPFKZETDBHV6383QX6E_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4RJETKC86BS6ACPWY992T1_image0.png\",\r\n        \"375993252939-devemb-device-faces/01GY8D9PB7FGWCQEPN9KYGK6HK/862798051070569/01HP4RJETKC86BS6ACPWY992T1_image01.png\"\r\n        ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/drivers/index",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"drivers",
+								"index"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Indexed Photo for Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para alterar a foto indexada referente a um driver, o teamUlid a qual o driver pertence é OPCIONAL.\r\n// Neste ambiente simulamos as duas possíveis respostas de processado e não processados de forma aleatória.\r\n{\r\n    \"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\r\n    \"driverulid\":\"01HRYXG9NASJ7RS7TV0BDHH7QX\",\r\n    \"photoulids\":[\r\n\"01HRYXDBRVW395BTM9MNCFDRYP\",\r\n\"01HRYXDBY20M9V99GF0NNACJ1E\",\r\n\"01HRYX84Y5Q0XZ44D5E13GC4PM\",\r\n\"01HRYX84X8M48JWKY444YR4FWV\",\r\n\"01HRYX84T279KQAGE31VPJCWTR\",\r\n\"01HRYX84R0EJT2BD07TC8R0Y5S\",\r\n\"01HRYX83KKBFCZ5029285F9XZJ\",\r\n\"01HRYX83K5HWBCPVA30KRRC2KB\",\r\n\"01HRYX83FBJ63D225KJYE69PH2\",\r\n\"01HRYX83594K4MKNEFKXCR8NTS\",\r\n\"01HRYX8344B5C747A3XKBKWH21\",\r\n\"01HRYX831AKMQ6RQJ0NBWNBEN6\",\r\n\"01HRYX830Q1MZ3XA8X4KF9437M\",\r\n\"01HRYX82Y8C44KZ4DTVN0AY60N\",\r\n\"01HRYX82XFF7R274HJZ1GSHD6S\",\r\n\"01HRYX82K3043J70KBXHHNWJPH\",\r\n\"01HRYX82HWWZ157VTG8FXRYG3D\",\r\n\"01HRYX82HWWZ157VTG8CV4WFZK\",\r\n\"01HRYX82HVTE139SXEKWCKYBZB\",\r\n\"01HRYX82HVTE139SXEKS18BYZY\",\r\n\"01HRYX82FSZT3KDXTE2VK3R1BH\",\r\n\"01HRYX82EQTF3VSSAXA98ZBRXP\",\r\n\"01HRYX828YNF6TSZ5Y0GA315VY\",\r\n\"01HRYX827V6Q1S3TA8VF7S5YHD\",\r\n\"01HRYX826ST1G582BFY3B780J5\",\r\n\"01HRYX822V5E044B2DAK4111WR\",\r\n\"01HRYX822F941AVWCMF0M2Y14F\",\r\n\"01HRYX822AQ32WT742C36D9Z4D\",\r\n\"01HRYX8228RJY753CGNN5W29NF\",\r\n\"01HRYX8200P41Q5M5FBB64XFNH\",\r\n\"01HRYX81Z6MY5ARDFV84PJ0RGX\",\r\n\"01HRYX81W8RMBGD2M6SF7HYK4Y\",\r\n\"01HRYX81R8ESCJVBTR9T6EYCP5\",\r\n\"01HRYX81R7Y5FV00TGB233MW47\",\r\n\"01HRYX81NS50VVSKY3D2HPKXCX\",\r\n\"01HRYX81NH9SX9H8KEY6JDPTE2\",\r\n\"01HRYX81E7RTSW60JEMZDRNQ4B\",\r\n\"01HRYX81CC2HJJNDW2CF3PEMMH\",\r\n\"01HRYX81CBD4EVSPABX35KWFGK\",\r\n\"01HRYX81CBD4EVSPABWZ7022GN\",\r\n\"01HRYX81AGF8KHP02DQM463WPQ\",\r\n\"01HRYX8198M50NZNKCJK9731TY\",\r\n\"01HRYX8198M50NZNKCJK8ACH5K\",\r\n\"01HRYX8197MGT01PPCZTXTZBP9\",\r\n\"01HRYX8197MGT01PPCZQGBKC5R\",\r\n\"01HRYX816QBJ0XF8Q8FNVC6WAG\",\r\n\"01HRYX811QYW5Y44DFY8HTP10Q\",\r\n\"01HRYX8113P7HTVZFFEJ29JE8N\",\r\n\"01HRYX8113P7HTVZFFEFVQ4JXR\",\r\n\"01HRYX80ZV34AMW123D3KWQNEV\",\r\n\"01HRYX80ZV34AMW123D1Q2YZF0\",\r\n\"01HRYX80XZ9EWDNQGMREQGNMVY\",\r\n\"01HRYX80XZ9EWDNQGMRDABHD86\",\r\n\"01HRYX80SQCK6BC6EE1BZC8SYC\",\r\n\"01HRYX80SK6ZTC3Z4FJ9KYXAPQ\",\r\n\"01HRYX80KCYETVAKJFQYAMAZ5Z\",\r\n\"01H00XHRK2N8JFYT1X0CEQ19RG\",\r\n\"01GXNRC9JQEENDWC76Y3ERFE5T\",\r\n\"01GXNR4YA00Q1A6A97DFJ63KN3\",\r\n\"01GWVTV1CPDWP9E8KJ82811S5Y\",\r\n\"01GWVTB6KT4QR5Z77T4477C66Q\",\r\n\"01GWVQY8FSHTNKVMP2P5TC66H4\",\r\n\"01GWVQX116G767QJ8SV1QCBQWE\",\r\n\"01GVNPBDNE6JW0TNYD4882GMXX\",\r\n\"01GVNP7MYDMFP55S0DSFX3W26J\",\r\n\"01GVNNP11FYVV6T3W81H6Y6645\",\r\n\"01GVNN80326KHZA89HEA3YNW6V\",\r\n\"01GVNMW11EXN3MSRAMFBC7Y2MP\",\r\n\"01GVND2Z9HNRG7ADDH08WTHWKM\",\r\n\"01GVNCD9JZEARMZ8ST2CSJZC68\",\r\n\"01GVNBQ0W7N14K0VK0HTCDHF5J\"\r\n]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/photos/indexed/change/driver",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"photos",
+								"indexed",
+								"change",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Recognized photo for Driver",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para alterar a foto reconhecida referente a um driver, o teamUlid a qual o driver pertence é OPCIONAL.\r\n// Neste ambiente simulamos as duas possíveis respostas de processado e não processados de forma aleatória.\r\n{\r\n    \"teamulid\":\"01H0MT3PK4H9ZTXVHWV8FJW8NA\",\r\n    \"driverulid\":\"01H0MT3PK4H9ZTXVHWV8FJW8NA\",\r\n    \"photoulids\":[\"01H19GF34NJT8QYS7S2HCFBYY3\",\"01H19GF34NJT8QYS7S2HCFBYY3\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/photos/recognized/change/driver",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"photos",
+								"recognized",
+								"change",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recognized Photos by driver",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "5",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para um determinado driver. Como exemplo, disponibilizamos 3 Ulids diferentes de drivers para fins de testes: \"01HMKFCMWF49T5ZR4WT34BANBF\", \"01GZXXCVVPEKM7E830XAMJKA14\", \"01HP5X70WA32JHW7WGCD9VJ314\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/drivers/01GZXXCVVPEKM7E830XAMJKA14/photos/recognized",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"drivers",
+								"01GZXXCVVPEKM7E830XAMJKA14",
+								"photos",
+								"recognized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recognized Photos By Teams",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos reconhecidas para um determinado team, como exemplo, disponibilizamos 3 fotos relacionadas ao team com ulid: \"01TEBNXKYTF5DVJGE2F4C1MV49\" para fins de testes.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/teams/01TEBNXKYTF5DVJGE2F4C1MV49/photos/recognized",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"teams",
+								"01TEBNXKYTF5DVJGE2F4C1MV49",
+								"photos",
+								"recognized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Indexed photo by driver",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "10",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para um determinado driver. Como exemplo, disponibilizamos 3 Ulids diferentes de drivers para fins de testes: \"01HMKFCMWF49T5ZR4WT34BANBF\", \"01GZXXCVVPEKM7E830XAMJKA14\", \"01HP5X70WA32JHW7WGCD9VJ314\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/drivers/01HRYXG9NASJ7RS7TV0BDHH7QX/photos/indexed",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"drivers",
+								"01HRYXG9NASJ7RS7TV0BDHH7QX",
+								"photos",
+								"indexed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Indexed photo by team",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "5",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "0",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para um determinado team, como exemplo, disponibilizamos 3 fotos relacionadas ao team com ulid: \"01TEBNXKYTF5DVJGE2F4C1MV49\" para fins de testes.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/teams/01TEBNXKYTF5DVJGE2F4C1MV49/photos/indexed",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"teams",
+								"01TEBNXKYTF5DVJGE2F4C1MV49",
+								"photos",
+								"indexed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Photos by Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para um determinado device, reconhecidas ou não. Como exemplo, disponibilizamos 3 deviceSource para serem utilizados neste ambiente 862798051419758, 862798050833462, 862798050576806",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/devices/01HP5X70WA32JHW7WGCD9VJ314/photos/unrecognized",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"devices",
+								"01HP5X70WA32JHW7WGCD9VJ314",
+								"photos",
+								"unrecognized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Photo By Fleet",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para uma determinada frota (fleet). Como exemplo, disponibilizamos 3 ulid de frotas disponíveis: \"01HPKKW7PMQK2F0A3ESZCRQSZA\", \"01HPKKW7PQ1M1TW518JF6THSTJ\", \"01HPKKW7PRQRHEARA4QGPD75DY\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/fleets/01HPKKW7PQ1M1TW518JF6THSTJ/photos",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"fleets",
+								"01HPKKW7PQ1M1TW518JF6THSTJ",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Photo by Event",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos relacionadas a um determinado evento Como exemplo, disponibilizamos 3 Ulids diferentes de eventos para fins de testes: \"01HPM9DJFCFTCMJ2FA35SY40EE\" , \"01HPM9HEH75PVP8G2SGTRQRBKA\", \"01HPM9KMMAKAWV1E6M2KMGMZ84\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/events/01HPM9HEH75PVP8G2SGTRQRBKA/photos",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"events",
+								"01HPM9HEH75PVP8G2SGTRQRBKA",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Driver Recognized Photo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "59",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar as fotos reconhecidas para um determinado drivers de acordo com Ulid do drivers. Como exemplo, disponibilizamos 3 Ulids diferentes de drivers para fins de testes: \"01HMKFCMWF49T5ZR4WT34BANBF\", \"01GZXXCVVPEKM7E830XAMJKA14\", \"01HP5X70WA32JHW7WGCD9VJ314\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/drivers/photos/01HMKFCMWF49T5ZR4WT34BANBF",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"drivers",
+								"photos",
+								"01HMKFCMWF49T5ZR4WT34BANBF"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Driver Indexed Photo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "TIMELIMIT",
+								"value": "59",
+								"type": "text"
+							},
+							{
+								"key": "OFFSET",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "LIMIT",
+								"value": "100",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para retornar todas as fotos indexadas para um determinado drivers de acordo com Ulid do drivers. Como exemplo, disponibilizamos 3 Ulids diferentes de drivers para fins de testes: \"01HMKFCMWF49T5ZR4WT34BANBF\", \"01GZXXCVVPEKM7E830XAMJKA14\", \"01HP5X70WA32JHW7WGCD9VJ314\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/drivers/photos/01HMKFCMWF49T5ZR4WT34BANBF/indexed",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"drivers",
+								"photos",
+								"01HMKFCMWF49T5ZR4WT34BANBF",
+								"indexed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Indexed Photo Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Apaga fotos indexadas relacionadas a um driver do sistema.\r\n// Neste ambiente simulamos as duas possíveis resposta de processado e não processados de forma aleatória.\r\n// O limite de fotos para apagar é de 20 fotos.\r\n{\r\n    \"photoulids\":[\r\n\"01HRYXQ33HYRQ15ARGZZWZBH1X\",\r\n\"01HRYXPWJDWJYZ0WH9NYWKCSJB\",\r\n\"01HRYXPWQ9THX90Y9Z9SGFF6Y1\",\r\n\"01HRYXPWQANJ5VGKY0JZG0XGAT\",\r\n\"01HRYXPWSS3MKC5CS25FVAZQ90\",\r\n\"01HRYXPWW9VD3S7AJNGY2KKE1J\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/remove/driver/indexed",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"remove",
+								"driver",
+								"indexed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Recognized Photo Driver",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Apaga as fotos do sistema por completo.\r\n// Neste ambiente simulamos as duas possíveis resposta de processado e não processados de forma aleatória.\r\n// O limite de fotos para apagar são de 20 fotos.\r\n{\r\n    \"photoulids\":[\"01H14C18PHYH3RBBVHDGV1N1YQ\", \"01H14C18PHYH3RBBVHDGV1N1YQ\",\"01H14C18PHYH3RBBVHDGV1N1YQ\",\"01H14C18PHYH3RBBVHDGV1N1YQ\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/face/remove/photo",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"face",
+								"remove",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Management",
+			"item": [
+				{
+					"name": "Device",
+					"item": [
+						{
+							"name": "Get Device info",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o ulid e outras informações sobre o device informando o deviceSource do device no parametro.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/123456789/info",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"123456789",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Devices By Fleet",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o todas as informações de devices criados no banco para determinada fleet.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets/01GZXXJJAV7ZJEED6TYEDZYA1B/devices",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets",
+										"01GZXXJJAV7ZJEED6TYEDZYA1B",
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Device",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para apagar determinado device da fleet (frota) via devicesource como parametro.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/123456789",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"123456789"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Device Fleet",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza um numero de device relacionado a determinada frota (fleet).",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/123456789/fleets/01H3HQP66V071M273FB9DSG48N",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"123456789",
+										"fleets",
+										"01H3HQP66V071M273FB9DSG48N"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Device Automatic Recognition",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza a função de reconhecimento automatico de determinado device de forma remota para ativado ou não. (S / N)",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/01H5AARQ2KPGZWJ5J7FZD3V0YR/automaticrecognition/S",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"01H5AARQ2KPGZWJ5J7FZD3V0YR",
+										"automaticrecognition",
+										"S"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Device PhoneNumber",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Atualiza um numero de telefone associado a determinado device, passando primeiro o DEVICESOURCE (12345678) e depois o novo numero a ser colocado (ex: 55555555) ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/12345678/phonenumber/55555555",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"12345678",
+										"phonenumber",
+										"55555555"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Device ICCID",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza o ICCID de determinado device (12345678) para um novo (77777777)",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/devices/12345678/iccid/77777777",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"devices",
+										"12345678",
+										"iccid",
+										"77777777"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Driver",
+					"item": [
+						{
+							"name": "Create Driver",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Endpoint utilizado para criarmos um driver\r\n//GenericKey é o nome de chave dado para este driver, que pertence a um team.\r\n//O endpoint retornará o ULID do team criado.\r\n{\r\n    \"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\r\n    \"generickey\":\"driverTest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/drivers",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"drivers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Driver Batch",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Endpoint utilizado para criarmos um driver\r\n//GenericKey é o nome de chave dado para este driver, que pertence a um team.\r\n//O endpoint retornará o ULID do team criado.\r\n{\r\n    \"drivers\" : [\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"1\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"2\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"3\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"4\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"5\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"6\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"7\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"8\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"9\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"10\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"11\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"12\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"13\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"14\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"15\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"16\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"17\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"18\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"19\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"20\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"21\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"22\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"23\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"24\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"25\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"26\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"27\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"28\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"29\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"30\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"31\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"32\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"33\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"34\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"35\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"36\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"37\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"38\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"39\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"40\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"41\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"42\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"43\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"44\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"45\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"46\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"47\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"48\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"49\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"50\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"51\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"52\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"53\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3asdasd\",\"generickey\":\"54\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"55\"},\r\n        {\"teamulid\":\"01GVJVTVWYYVGVFD2ZX99KPHW3\",\"generickey\":\"56\"}\r\n    ] \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/drivers/batch",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"drivers",
+										"batch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Driver",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o ulid e outras informações sobre o motorista informando o ulid do motorista no parametro.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/drivers/01H5A6S5AJS2YS6CA1N7BRPRZ2/info",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"drivers",
+										"01H5A6S5AJS2YS6CA1N7BRPRZ2",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Drivers By Team",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o todas as informações de drivers criados no banco para determinado team.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H0MT3PK4H9ZTXVHWV8FJW8NA/drivers",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H0MT3PK4H9ZTXVHWV8FJW8NA",
+										"drivers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Driver",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para apagar determinado motorista da fleet.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/drivers/01H5A6S5AJS2YS6CA1N7BRPRZ2",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"drivers",
+										"01H5A6S5AJS2YS6CA1N7BRPRZ2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Driver GenericKey",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza o generic key de determinado driver.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/drivers/01H0MTCVPF64TK15WGQF0VTT6R/generickey/newDriverGenericKey",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"drivers",
+										"01H0MTCVPF64TK15WGQF0VTT6R",
+										"generickey",
+										"newDriverGenericKey"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fleet",
+					"item": [
+						{
+							"name": "Create Fleet",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Endpoint utilizado para criarmos uma fleet pertencente a um team.\r\n//GenericKey é um campo que pode armazenar qualquer dado para esta fleet.\r\n//O endpoint retornará o ULID da fleet criada.\r\n{\r\n    \"teamulid\":\"01HMBNXKYTF5DVJGE2F4C1MV49\",\r\n    \"generickey\":\"fleetTest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Fleet",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o ulid e outras informações sobre a fleet informando o ulid da fleet no parametro.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets/01GZXXJJAV7ZJEED6TYEDZYA1B/info",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets",
+										"01GZXXJJAV7ZJEED6TYEDZYA1B",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Fleets By Team",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o todas as informações de fleets criadas no banco de dados da conta.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Fleet GenericKey",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza o genericKey da frota (fleet)",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets/01GZXXJJAV7ZJEED6TYEDZYA1B/generickey/newGenericKeyFleetTest",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets",
+										"01GZXXJJAV7ZJEED6TYEDZYA1B",
+										"generickey",
+										"newGenericKeyFleetTest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Fleets",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para apagar determinada fleet do time.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/fleets/01H58E3RA7V354SCJN75MBN2TN",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"fleets",
+										"01H58E3RA7V354SCJN75MBN2TN"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Teams",
+					"item": [
+						{
+							"name": "Create Teams",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Endpoint utilizado para criarmos um team.\r\n//GenericKey é um campo que pode armazenar qualquer dado para este team.\r\n//O endpoint retornará o ULID do team criado.\r\n{\r\n    \"generickey\":\"teamTest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Team info",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o ulid e outras informações sobre o team informando o ulid do team no parametro.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H58DR8VSP3JB2TP42ECD223R/info",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H58DR8VSP3JB2TP42ECD223R",
+										"info"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Teams",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o todas as informações de teams criadas no banco da conta.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Team",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para apagar determinado team da account.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H5HW00KX80RNEBQJEAD8G9AP",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H5HW00KX80RNEBQJEAD8G9AP"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Teams GenericKey",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza o generic key do team ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01GZXXJJAV7ZJEED6TYEDZYA1B/generickey/newGenericKeyTeamTest",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01GZXXJJAV7ZJEED6TYEDZYA1B",
+										"generickey",
+										"newGenericKeyTeamTest"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "Get Account",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para recuperar o ulid e outras informações sobre a account.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/accounts/name",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts",
+										"name"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Account GenericKey",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "// Atualiza o genericKey da account utilizada.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/accounts/generickey/testeGenericKey",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts",
+										"generickey",
+										"testeGenericKey"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Accounts",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{path}}/management/accounts/name/all",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts",
+										"name",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Account",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"generickey\":\"golfleet\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/accounts",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Account",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{path}}/management/accounts/name",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts",
+										"name"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Teams For Account",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{path}}/management/teams",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Account",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{path}}/management/accounts",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TeamDriver",
+					"item": [
+						{
+							"name": "Create TeamDriver",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Não é necessário um body para essa requisição. Apenas parametros no endpoint \n//Este endpoint permite inserir drivers em diversos teams diferentes",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H3HQNVY7MFRQDXQFTCG9QKYD/drivers/01HMBNXKYXVF7EXNKBPDYGGHFZ/add",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H3HQNVY7MFRQDXQFTCG9QKYD",
+										"drivers",
+										"01HMBNXKYXVF7EXNKBPDYGGHFZ",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete TeamDriver",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Endpoint utilizado para apagar determinado driver que está em mais de um team.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H3HQNVY7MFRQDXQFTCG9QKYD/drivers/01H5AAS6MT35RSARYQXQGJXE1X/remove",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H3HQNVY7MFRQDXQFTCG9QKYD",
+										"drivers",
+										"01H5AAS6MT35RSARYQXQGJXE1X",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update TeamDriver",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Altera um driver que está em mais de um team para outro team.",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/management/teams/01H0MT3PK4H9ZTXVHWV8FJW8NA/drivers/01H5HVXWNVMRKG9VZ9P0TWA5XD/update/01H5HW00KX80RNEBQJEAD8G9AP",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"management",
+										"teams",
+										"01H0MT3PK4H9ZTXVHWV8FJW8NA",
+										"drivers",
+										"01H5HVXWNVMRKG9VZ9P0TWA5XD",
+										"update",
+										"01H5HW00KX80RNEBQJEAD8G9AP"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Send An Order To Device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							},
+							{
+								"key": "AccountUlid",
+								"value": "{{AccountUlid}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/config",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"config"
+							]
+						},
+						"description": "### **Description**\n\nSends a batch of requests to devices\n\n### Request\n\n#### Path\n\n#### **{{path}}/order/devices/config**\n\n| **Parameter** | **Required** | **Type** |\n| --- | --- | --- |\n| **{{path}}** | True | String |\n\n**Body**\n\n``` json\n{\n    \"devices\": [\"862798050832837\"],\n    \"orders\": [\n        {\n            \"config\":\"MAX_SPEED_KMH\",\n            \"value\":110\n        }\n    ]\n}\n\n ```\n\n| **Parameter** | **Required** | **type** |\n| --- | --- | --- |\n| **devices** | True | String List |\n| **orders** | True | Object List |\n| **config** | True | String |\n| **value** | True | Int |\n\n### **Response**\n\n### 201\n\n``` json\n{\n   \"devices\":[\n      {\n         \"deviceSource\":\"862798050834858\",\n         \"successfulOrders\":[\n            {\n               \"orderUlid\":\"01HACP87N57SF5RQZMJTV1898Q\",\n               \"config\":[\n                  \"MAX_SPEED_KMH\"\n               ]\n            }\n         ],\n         \"failedOrders\":[\n         ]\n      }\n   ]\n}\n\n ```\n\n| **Parameter** | **Required** | **Type** |\n| --- | --- | --- |\n| **devices** | True | String List |\n| **deviceSource** | True | String |\n| **successfulOrders** | False | Object List |\n| **orderUlid** | False | String |\n| **config** | False | String List |\n| **failedOrders** | False | String List |\n\n### 400\n\n``` json\n{\n    \"Error Aplication Descrition\"\n}\n\n ```\n\n### 401\n\n``` json\n{\n  \"message\": \"Unauthorized\"\n}\n\n ```\n\n### 403\n\n``` json\n{\n  \"message\": \"Missing Authentication Token\"\n}\n\n ```\n\n### 405\n\n``` json\n\"Path API Not Valid\"\n\n ```\n\n### 500\n\n``` json\n{\n     \"message\": \"Internal Server Error\"\n}\n\n ```"
+					},
+					"response": [
+						{
+							"name": "Example 201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"devices\": [\n        {\n            \"deviceSource\": \"862798050834858\",\n            \"successfulOrders\": [\n                {\n                    \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\n                    \"config\": [\n                        \"MAX_SPEED_KMH\"\n                    ]\n                }\n            ],\n            \"failedOrders\": []\n        }\n    ]\n}"
+						},
+						{
+							"name": "Example 400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "Aplication Error Descrition"
+						},
+						{
+							"name": "Example 401",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"disabled": true
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Unauthorized\"\n}\n\n"
+						},
+						{
+							"name": "Example 403",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Missing Authentication Token\"\n}"
+						},
+						{
+							"name": "Example 405",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"status": "Method Not Allowed",
+							"code": 405,
+							"_postman_previewlanguage": "Text",
+							"header": null,
+							"cookie": [],
+							"body": "Path API Not Valid"
+						},
+						{
+							"name": "Example 500",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}"
+									},
+									{
+										"key": "AccountUlid",
+										"value": "{{AccountUlid}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "//Utilizado para enviar ORDENS para o device. O cenário \"simula\" ordens executadas com sucesso e falha aleatóriamente neste ambiente.\r\n{\r\n     \"devices\": [{\r\n                    \"deviceSource\": \"862798050834858\",\r\n                    \"successfulOrders\": [\r\n                        {\r\n                            \"orderUlid\": \"01HACP87N57SF5RQZMJTV1898Q\",\r\n                            \"config\": [\r\n                                \"MAX_SPEED_KMH\"\r\n                            ]\r\n                        }\r\n                    ],\r\n                    \"failedOrders\": []\r\n                }]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{path}}/order/devices/config",
+									"host": [
+										"{{path}}"
+									],
+									"path": [
+										"order",
+										"devices",
+										"config"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "Text",
+							"header": null,
+							"cookie": [],
+							"body": "Internal Server Error"
+						}
+					]
+				},
+				{
+					"name": "Get Orders From Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//- SENT / PENDING / PROCESSED ou FAILED - possíveis status de retorno. Obtem as ordens que foram enviadas ao device. O retorno deste ambiente é gerado aleatóriamente.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798050577622",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798050577622"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Obtem o estado de uma determinada ordem. O resultado neste ambiente é gerado aleatóriamente.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/01J9P42GQP7VZJQ91AM9W81KXQ",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"01J9P42GQP7VZJQ91AM9W81KXQ"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders Details from Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Obtem o estado de uma determinada ordem. O resultado neste ambiente é gerado aleatóriamente.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/details/862798052139652",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"details",
+								"862798052139652"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Orders From Device",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Deleta ordens que estão no status PENDING, da fila.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798051831663",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798051831663"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Single Order",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Deleta uma única ordem da fila de processamento do device.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/01HPKQF8RWW7RNYS8G7N8X8C5E",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"01HPKQF8RWW7RNYS8G7N8X8C5E"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Wifi",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Ordem enviada ao device para adicionar uma rede wifi para reconhecimento.\r\n//Como parametro do path ele recebe o deviceSource.\r\n{\r\n    \"ssid\": \"CasaParanaVisita\",\r\n    \"password\": \"londrina@2018\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798050835863/wifi",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798050835863",
+								"wifi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Wifi",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Deleta um wifi cadastrado no device",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798051841936/wifi/01HXHPK4VAJ7X95YAX7CKV7VG4",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798051841936",
+								"wifi",
+								"01HXHPK4VAJ7X95YAX7CKV7VG4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Reboot To Device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Endpoint utilizado pare enviar uma ordem de reboot para reinicializar o device.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798050577622/command/reboot",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798050577622",
+								"command",
+								"reboot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Demand image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para obter imagens de uma viagem de determinado device.\r\n// a cam escolhida pode ser do motorista (driver) ou da estrada (road)\r\n{\r\n    \"timeStamp\": \"2024-05-28T19:36:40Z\",\r\n    \"selectedCam\": \"road\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798051832166/command/demand/image",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798051832166",
+								"command",
+								"demand",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Demand video",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// Endpoint utilizado para obter videos de uma viagem de determinado device.\r\n// a cam escolhida pode ser do motorista (driver) ou da estrada (road)\r\n// O limite máximo de duração do vídeo é de 3 minutos.\r\n{\r\n    \"timeStamp\": \"2024-10-02T21:07:45Z\",\r\n    \"finalTimeStamp\": \"2024-10-02T21:10:45Z\",\r\n    \"selectedCam\": \"road\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798050831581/command/demand/video",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798050831581",
+								"command",
+								"demand",
+								"video"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Driver Coach inertial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/{devicesource}/command/drivercoach/inertial/{state}",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"{devicesource}",
+								"command",
+								"drivercoach",
+								"inertial",
+								"{state}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Driver Coach telemetry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/{devicesource}/command/drivercoach/telemetry/{state}",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"{devicesource}",
+								"command",
+								"drivercoach",
+								"telemetry",
+								"{state}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Driver Coach tracking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/{devicesource}/command/drivercoach/tracking/{state}",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"{devicesource}",
+								"command",
+								"drivercoach",
+								"tracking",
+								"{state}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Force Position",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Envia uma ordem ao device para saber em qual estado ele se encontra no momento.",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798050832837/command/state",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798050832837",
+								"command",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Wifi - Batch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//Ordem enviada para uma lista de DeviceSources para que seja adicionado wifi em Lotes.\r\n{\r\n    \"wifis\":[{\"deviceSource\": \"862798050832837\",\"ssid\": \"123455689\",\"password\": \"Aa123!\"}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/batch/wifi",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"batch",
+								"wifi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send order Internal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"COMMAND\",\r\n    \"parameters\": [\r\n        {\r\n            \"Module\": \"cmdd\",\r\n            \"Key\": \"shellScript\",\r\n            \"Value\": \"ls -lh /storage/self/primary/installer > /sdcard/uploader/installer.txt\",\r\n            \"Type\": \"string\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/order/devices/862798052313802/config",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"order",
+								"devices",
+								"862798052313802",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AWS tools",
+			"item": [
+				{
+					"name": "Generate Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var token = pm.response.json().accessToken;\r",
+									"\r",
+									"// Define a variável global\r",
+									"pm.environment.set(\"token\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientId\": \"LuisRomano\",\r\n    \"clientSecret\": \"Acesso@V3#2024\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/auth/token",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "certificate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{path}}/certificate/devices/862798050832233/certificates",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"certificate",
+								"devices",
+								"862798050832233",
+								"certificates"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

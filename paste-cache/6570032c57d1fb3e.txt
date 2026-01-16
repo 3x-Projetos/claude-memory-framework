@@ -1,0 +1,73 @@
+PS C:\Users\Luis Romano\videotelemetria-ui\backend> npm run dev
+
+> videotelemetria-backend@1.0.0 dev
+> ts-node-dev --respawn --transpile-only src/server.ts
+
+[INFO] 16:41:32 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+Server running on port 3000
+Environment: development
+Health check: http://localhost:3000/health
+CORS enabled for: http://localhost:5173
+prisma:error
+Invalid `prisma.token.create()` invocation in
+C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:53:26
+
+  50 const expiresAt = new Date(Date.now() + (expiresInSeconds - 300) * 1000);
+  51
+  52 // Save token to database
+→ 53 await prisma.token.create({
+       data: {
+         expiresAt: new Date("2026-01-15T20:36:43.783Z"),
+     +   token: String
+       }
+     })
+
+Argument `token` is missing.
+Login error: PrismaClientValidationError:
+Invalid `prisma.token.create()` invocation in
+C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:53:26
+
+  50 const expiresAt = new Date(Date.now() + (expiresInSeconds - 300) * 1000);
+  51
+  52 // Save token to database
+→ 53 await prisma.token.create({
+       data: {
+         expiresAt: new Date("2026-01-15T20:36:43.783Z"),
+     +   token: String
+       }
+     })
+
+Argument `token` is missing.
+    at wn (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:29:1363)
+    at $n.handleRequestError (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6958)
+    at $n.handleAndLogRequestError (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at l (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at GolfleetService.login (C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:53:7)
+    at C:\Users\Luis Romano\videotelemetria-ui\backend\src\routes\auth.ts:37:20 {
+  clientVersion: '5.22.0'
+}
+Login error: PrismaClientValidationError:
+Invalid `prisma.token.create()` invocation in
+C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:53:26
+
+  50 const expiresAt = new Date(Date.now() + (expiresInSeconds - 300) * 1000);
+  51
+  52 // Save token to database
+→ 53 await prisma.token.create({
+       data: {
+         expiresAt: new Date("2026-01-15T20:36:43.783Z"),
+     +   token: String
+       }
+     })
+
+Argument `token` is missing.
+    at wn (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:29:1363)
+    at $n.handleRequestError (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6958)
+    at $n.handleAndLogRequestError (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at l (C:\Users\Luis Romano\videotelemetria-ui\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at GolfleetService.login (C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:53:7)
+    at C:\Users\Luis Romano\videotelemetria-ui\backend\src\routes\auth.ts:37:20 {
+  clientVersion: '5.22.0'
+}

@@ -1,0 +1,25 @@
+Ajustes:
+
+- 'golfleet-ui' - renomeie para 'videotelemetria-ui'
+
+```
+Comandos multi-step:
+   - Upload Databases (2 botões sequenciais: Create TAR → Upload)
+```
+- Apenas um botão para enviar comandos multi-step (abstrair para o usuário)
+
+
+Textarea para lista de IMEIs (um por linha)
+- um por linha OU separados por vírgula OU separados por espaço
+
+
+2. Validação de IMEIs (formato, duplicados)
+- Esta é uma feature interessante para a UI em prod. inicialmente, em dev, os testes poderão ser feitos "duplicando" o imei de teste para simular multiplos equipamentos.
+
+- UI de comandos rápidos (cards)
+- Perfeito.
+
+Obs:
+- videos possuem limite de 3min por requisição.
+- data/horas no device e nos endpoints estão no formato UTC. A maioria das requisições direcionadas ao usuário chegam em BRT. em campos de data/hora o fuso solicitado precisa estar claro ao usuário. Abstrações de fuso podem facilitar a usabilidade.
+- comandos podem demorar segundos, minutos, horas ou dias para executar. Nossos equipamentos estão em constante deslocamento dentro e fora de zonas de comunicação. O fluxo precisa considerar o trabalho em um dispositivo do começo ao fim (envio e validação de status sequencialmente) E trabalho em mais de uma demanda em etapas (ex: envio dispositivo1, envio dispositivo2, validação de status dispositivo1, validação de status dispositivo2)

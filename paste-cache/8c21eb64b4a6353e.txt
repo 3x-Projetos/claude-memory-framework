@@ -1,0 +1,18 @@
+PS C:\Users\Luis Romano\videotelemetria-ui\backend> npm run dev
+
+> videotelemetria-backend@1.0.0 dev
+> ts-node-dev --respawn --transpile-only src/server.ts
+
+[INFO] 07:45:14 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.9.3)
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at app.listen (C:\Users\Luis Romano\videotelemetria-ui\node_modules\express\lib\application.js:635:24)
+    at Object.<anonymous> (C:\Users\Luis Romano\videotelemetria-ui\backend\src\server.ts:72:5)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1760:14)
+    at Module._compile (C:\Users\Luis Romano\videotelemetria-ui\node_modules\source-map-support\source-map-support.js:568:25)
+    at Module.m._compile (C:\Users\LUISRO~1\AppData\Local\Temp\ts-node-dev-hook-7708510077274365.js:69:33)
+    at node:internal/modules/cjs/loader:1893:10
+    at require.extensions..jsx.require.extensions..js (C:\Users\LUISRO~1\AppData\Local\Temp\ts-node-dev-hook-7708510077274365.js:114:20)
+[ERROR] 07:45:14 Error: listen EADDRINUSE: address already in use :::3000

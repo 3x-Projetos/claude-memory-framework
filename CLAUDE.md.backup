@@ -1,0 +1,98 @@
+# Claude Code - Session Strategy
+
+Best practices for efficient context management and productive sessions.
+
+## Progressive Loading Principle
+
+**Load only what you need, when you need it.**
+
+### Always Load (Startup)
+- Session state files (~1k tokens)
+- Summary/quick files (.quick.md, README.md headers)
+- Current task context only
+
+### Load On-Demand
+- Full documentation (when modifying)
+- Detailed specs (when implementing)
+- Historical context (when researching)
+
+**Rule**: Reference via `@filename.md` instead of reading upfront.
+
+## Context Budget Guidelines
+
+| Session Type | Target | Strategy |
+|--------------|--------|----------|
+| Quick fix | <25% | Minimal: load only affected files |
+| Feature work | <50% | Progressive: load as you go |
+| Research | <60% | Selective: specific docs only |
+| Architecture | <70% | Planned: /compact every 40 messages |
+
+## Session Workflow
+
+### Starting
+1. Use existing context from previous session
+2. Load task-specific files only
+3. Don't read entire README/docs upfront
+
+### Working
+- Monitor context meter
+- `/compact` at 70% capacity
+- Use subagents for isolated tasks
+- Clear between unrelated tasks
+
+### Ending
+- Save decisions to relevant docs
+- Commit with descriptive messages
+- Update roadmap/status files
+
+## Key Commands
+
+- `/compact` - Summarize and free context (use at 70%)
+- `/clear` - Full reset (only when switching major tasks)
+- `/context` - Check current context usage
+
+## Tool Efficiency
+
+**DO** ✅:
+- Use `@` references for specific files
+- Load summaries before full docs
+- Trust file paths without reading first
+- Use Grep/Glob for discovery, Read for details
+
+**DON'T** ❌:
+- Load all docs at session start
+- Read files you won't modify
+- Keep unused context loaded
+- Let context exceed 80%
+
+## Commit Conventions
+
+```
+{type}: {brief description}
+
+{detailed explanation if needed}
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Co-Authored-By: {model} <noreply@anthropic.com>
+```
+
+Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `security`
+
+---
+
+**This file is loaded automatically on every Claude Code session.**
+**Keep it under 1k tokens. Add project-specific context to project CLAUDE.md files.**
+
+## Contextual Suggestions
+
+### Suggest `/reflect` When:
+- User expresses frustration ("this is frustrating", "stuck", "annoying")
+- Major achievement completed (complex feature, bug fixed, milestone)
+- Long session (>2 hours) without reflection
+- User mentions feeling tired/drained
+
+**How to suggest**: Brief, natural mention like:
+- "Great progress! Want to capture a quick reflection? (`/reflect`)"
+- "That was frustrating. Mind logging how you're feeling? (`/reflect`)"
+
+Keep it subtle - don't interrupt flow. Skip if user seems rushed.

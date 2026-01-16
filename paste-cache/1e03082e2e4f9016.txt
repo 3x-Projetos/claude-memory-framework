@@ -1,0 +1,197 @@
+chunk-AVJPV5ZH.js?v=bab713de:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+react-router-dom.js?v=bab713de:4436 ⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+warnOnce @ react-router-dom.js?v=bab713de:4436
+logDeprecation @ react-router-dom.js?v=bab713de:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=bab713de:4442
+(anonymous) @ react-router-dom.js?v=bab713de:5314
+commitHookEffectListMount @ chunk-AVJPV5ZH.js?v=bab713de:16915
+commitPassiveMountOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:18156
+commitPassiveMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:18129
+commitPassiveMountEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:18119
+commitPassiveMountEffects @ chunk-AVJPV5ZH.js?v=bab713de:18109
+flushPassiveEffectsImpl @ chunk-AVJPV5ZH.js?v=bab713de:19490
+flushPassiveEffects @ chunk-AVJPV5ZH.js?v=bab713de:19447
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:19328
+workLoop @ chunk-AVJPV5ZH.js?v=bab713de:197
+flushWork @ chunk-AVJPV5ZH.js?v=bab713de:176
+performWorkUntilDeadline @ chunk-AVJPV5ZH.js?v=bab713de:384Understand this warning
+react-router-dom.js?v=bab713de:4436 ⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+warnOnce @ react-router-dom.js?v=bab713de:4436
+logDeprecation @ react-router-dom.js?v=bab713de:4439
+logV6DeprecationWarnings @ react-router-dom.js?v=bab713de:4445
+(anonymous) @ react-router-dom.js?v=bab713de:5314
+commitHookEffectListMount @ chunk-AVJPV5ZH.js?v=bab713de:16915
+commitPassiveMountOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:18156
+commitPassiveMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:18129
+commitPassiveMountEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:18119
+commitPassiveMountEffects @ chunk-AVJPV5ZH.js?v=bab713de:18109
+flushPassiveEffectsImpl @ chunk-AVJPV5ZH.js?v=bab713de:19490
+flushPassiveEffects @ chunk-AVJPV5ZH.js?v=bab713de:19447
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:19328
+workLoop @ chunk-AVJPV5ZH.js?v=bab713de:197
+flushWork @ chunk-AVJPV5ZH.js?v=bab713de:176
+performWorkUntilDeadline @ chunk-AVJPV5ZH.js?v=bab713de:384Understand this warning
+SingleDevice.tsx:149 Uncaught TypeError: Cannot read properties of undefined (reading 'className')
+    at SingleDevice.tsx:149:134
+    at Array.map (<anonymous>)
+    at SingleDevice (SingleDevice.tsx:143:27)
+    at renderWithHooks (chunk-AVJPV5ZH.js?v=bab713de:11548:26)
+    at updateFunctionComponent (chunk-AVJPV5ZH.js?v=bab713de:14582:28)
+    at beginWork (chunk-AVJPV5ZH.js?v=bab713de:15924:22)
+    at HTMLUnknownElement.callCallback2 (chunk-AVJPV5ZH.js?v=bab713de:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-AVJPV5ZH.js?v=bab713de:3699:24)
+    at invokeGuardedCallback (chunk-AVJPV5ZH.js?v=bab713de:3733:39)
+    at beginWork$1 (chunk-AVJPV5ZH.js?v=bab713de:19765:15)
+(anonymous) @ SingleDevice.tsx:149
+SingleDevice @ SingleDevice.tsx:143
+renderWithHooks @ chunk-AVJPV5ZH.js?v=bab713de:11548
+updateFunctionComponent @ chunk-AVJPV5ZH.js?v=bab713de:14582
+beginWork @ chunk-AVJPV5ZH.js?v=bab713de:15924
+callCallback2 @ chunk-AVJPV5ZH.js?v=bab713de:3674
+invokeGuardedCallbackDev @ chunk-AVJPV5ZH.js?v=bab713de:3699
+invokeGuardedCallback @ chunk-AVJPV5ZH.js?v=bab713de:3733
+beginWork$1 @ chunk-AVJPV5ZH.js?v=bab713de:19765
+performUnitOfWork @ chunk-AVJPV5ZH.js?v=bab713de:19198
+workLoopSync @ chunk-AVJPV5ZH.js?v=bab713de:19137
+renderRootSync @ chunk-AVJPV5ZH.js?v=bab713de:19116
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18874
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627
+setTimeout
+systemSetTimeoutZero @ @tanstack_react-query.js?v=bab713de:103
+flush @ @tanstack_react-query.js?v=bab713de:637
+batch @ @tanstack_react-query.js?v=bab713de:655
+dispatch_fn @ @tanstack_react-query.js?v=bab713de:1285
+setData @ @tanstack_react-query.js?v=bab713de:957
+fetch @ @tanstack_react-query.js?v=bab713de:1179
+await in fetch
+executeFetch_fn @ @tanstack_react-query.js?v=bab713de:1676
+setOptions @ @tanstack_react-query.js?v=bab713de:1426
+(anonymous) @ @tanstack_react-query.js?v=bab713de:3386
+commitHookEffectListMount @ chunk-AVJPV5ZH.js?v=bab713de:16915
+commitPassiveMountOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:18156
+commitPassiveMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:18129
+commitPassiveMountEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:18119
+commitPassiveMountEffects @ chunk-AVJPV5ZH.js?v=bab713de:18109
+flushPassiveEffectsImpl @ chunk-AVJPV5ZH.js?v=bab713de:19490
+flushPassiveEffects @ chunk-AVJPV5ZH.js?v=bab713de:19447
+commitRootImpl @ chunk-AVJPV5ZH.js?v=bab713de:19416
+commitRoot @ chunk-AVJPV5ZH.js?v=bab713de:19277
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18895
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627Understand this error
+SingleDevice.tsx:149 Uncaught TypeError: Cannot read properties of undefined (reading 'className')
+    at SingleDevice.tsx:149:134
+    at Array.map (<anonymous>)
+    at SingleDevice (SingleDevice.tsx:143:27)
+    at renderWithHooks (chunk-AVJPV5ZH.js?v=bab713de:11548:26)
+    at updateFunctionComponent (chunk-AVJPV5ZH.js?v=bab713de:14582:28)
+    at beginWork (chunk-AVJPV5ZH.js?v=bab713de:15924:22)
+    at HTMLUnknownElement.callCallback2 (chunk-AVJPV5ZH.js?v=bab713de:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-AVJPV5ZH.js?v=bab713de:3699:24)
+    at invokeGuardedCallback (chunk-AVJPV5ZH.js?v=bab713de:3733:39)
+    at beginWork$1 (chunk-AVJPV5ZH.js?v=bab713de:19765:15)
+(anonymous) @ SingleDevice.tsx:149
+SingleDevice @ SingleDevice.tsx:143
+renderWithHooks @ chunk-AVJPV5ZH.js?v=bab713de:11548
+updateFunctionComponent @ chunk-AVJPV5ZH.js?v=bab713de:14582
+beginWork @ chunk-AVJPV5ZH.js?v=bab713de:15924
+callCallback2 @ chunk-AVJPV5ZH.js?v=bab713de:3674
+invokeGuardedCallbackDev @ chunk-AVJPV5ZH.js?v=bab713de:3699
+invokeGuardedCallback @ chunk-AVJPV5ZH.js?v=bab713de:3733
+beginWork$1 @ chunk-AVJPV5ZH.js?v=bab713de:19765
+performUnitOfWork @ chunk-AVJPV5ZH.js?v=bab713de:19198
+workLoopSync @ chunk-AVJPV5ZH.js?v=bab713de:19137
+renderRootSync @ chunk-AVJPV5ZH.js?v=bab713de:19116
+recoverFromConcurrentError @ chunk-AVJPV5ZH.js?v=bab713de:18736
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18879
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627
+setTimeout
+systemSetTimeoutZero @ @tanstack_react-query.js?v=bab713de:103
+flush @ @tanstack_react-query.js?v=bab713de:637
+batch @ @tanstack_react-query.js?v=bab713de:655
+dispatch_fn @ @tanstack_react-query.js?v=bab713de:1285
+setData @ @tanstack_react-query.js?v=bab713de:957
+fetch @ @tanstack_react-query.js?v=bab713de:1179
+await in fetch
+executeFetch_fn @ @tanstack_react-query.js?v=bab713de:1676
+setOptions @ @tanstack_react-query.js?v=bab713de:1426
+(anonymous) @ @tanstack_react-query.js?v=bab713de:3386
+commitHookEffectListMount @ chunk-AVJPV5ZH.js?v=bab713de:16915
+commitPassiveMountOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:18156
+commitPassiveMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:18129
+commitPassiveMountEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:18119
+commitPassiveMountEffects @ chunk-AVJPV5ZH.js?v=bab713de:18109
+flushPassiveEffectsImpl @ chunk-AVJPV5ZH.js?v=bab713de:19490
+flushPassiveEffects @ chunk-AVJPV5ZH.js?v=bab713de:19447
+commitRootImpl @ chunk-AVJPV5ZH.js?v=bab713de:19416
+commitRoot @ chunk-AVJPV5ZH.js?v=bab713de:19277
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18895
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627Understand this error
+chunk-AVJPV5ZH.js?v=bab713de:14032 The above error occurred in the <SingleDevice> component:
+
+    at SingleDevice (http://localhost:5173/src/pages/SingleDevice.tsx:31:37)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:4131:5)
+    at Outlet (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:4537:26)
+    at main
+    at div
+    at AppLayout (http://localhost:5173/src/components/layouts/AppLayout.tsx:23:20)
+    at ProtectedRoute (http://localhost:5173/src/App.tsx:24:27)
+    at RenderedRoute (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:4131:5)
+    at Routes (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:4601:5)
+    at Router (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:4544:15)
+    at BrowserRouter (http://localhost:5173/node_modules/.vite/deps/react-router-dom.js?v=bab713de:5290:5)
+    at App
+    at QueryClientProvider (http://localhost:5173/node_modules/.vite/deps/@tanstack_react-query.js?v=bab713de:3156:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+logCapturedError @ chunk-AVJPV5ZH.js?v=bab713de:14032
+update.callback @ chunk-AVJPV5ZH.js?v=bab713de:14052
+callCallback @ chunk-AVJPV5ZH.js?v=bab713de:11248
+commitUpdateQueue @ chunk-AVJPV5ZH.js?v=bab713de:11265
+commitLayoutEffectOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:17093
+commitLayoutMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:17980
+commitLayoutEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:17969
+commitLayoutEffects @ chunk-AVJPV5ZH.js?v=bab713de:17920
+commitRootImpl @ chunk-AVJPV5ZH.js?v=bab713de:19353
+commitRoot @ chunk-AVJPV5ZH.js?v=bab713de:19277
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18895
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627
+setTimeout
+systemSetTimeoutZero @ @tanstack_react-query.js?v=bab713de:103
+flush @ @tanstack_react-query.js?v=bab713de:637
+batch @ @tanstack_react-query.js?v=bab713de:655
+dispatch_fn @ @tanstack_react-query.js?v=bab713de:1285
+setData @ @tanstack_react-query.js?v=bab713de:957
+fetch @ @tanstack_react-query.js?v=bab713de:1179
+await in fetch
+executeFetch_fn @ @tanstack_react-query.js?v=bab713de:1676
+setOptions @ @tanstack_react-query.js?v=bab713de:1426
+(anonymous) @ @tanstack_react-query.js?v=bab713de:3386
+commitHookEffectListMount @ chunk-AVJPV5ZH.js?v=bab713de:16915
+commitPassiveMountOnFiber @ chunk-AVJPV5ZH.js?v=bab713de:18156
+commitPassiveMountEffects_complete @ chunk-AVJPV5ZH.js?v=bab713de:18129
+commitPassiveMountEffects_begin @ chunk-AVJPV5ZH.js?v=bab713de:18119
+commitPassiveMountEffects @ chunk-AVJPV5ZH.js?v=bab713de:18109
+flushPassiveEffectsImpl @ chunk-AVJPV5ZH.js?v=bab713de:19490
+flushPassiveEffects @ chunk-AVJPV5ZH.js?v=bab713de:19447
+commitRootImpl @ chunk-AVJPV5ZH.js?v=bab713de:19416
+commitRoot @ chunk-AVJPV5ZH.js?v=bab713de:19277
+performSyncWorkOnRoot @ chunk-AVJPV5ZH.js?v=bab713de:18895
+flushSyncCallbacks @ chunk-AVJPV5ZH.js?v=bab713de:9119
+(anonymous) @ chunk-AVJPV5ZH.js?v=bab713de:18627Understand this error
+chunk-AVJPV5ZH.js?v=bab713de:9129 Uncaught TypeError: Cannot read properties of undefined (reading 'className')
+    at SingleDevice.tsx:149:134
+    at Array.map (<anonymous>)
+    at SingleDevice (SingleDevice.tsx:143:27)
+    at renderWithHooks (chunk-AVJPV5ZH.js?v=bab713de:11548:26)
+    at updateFunctionComponent (chunk-AVJPV5ZH.js?v=bab713de:14582:28)
+    at beginWork (chunk-AVJPV5ZH.js?v=bab713de:15924:22)
+    at beginWork$1 (chunk-AVJPV5ZH.js?v=bab713de:19753:22)
+    at performUnitOfWork (chunk-AVJPV5ZH.js?v=bab713de:19198:20)
+    at workLoopSync (chunk-AVJPV5ZH.js?v=bab713de:19137:13)
+    at renderRootSync (chunk-AVJPV5ZH.js?v=bab713de:19116:15)

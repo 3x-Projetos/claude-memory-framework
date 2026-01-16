@@ -1,0 +1,241 @@
+[INFO] 2026-01-16T17:39:09.955Z - Command history retrieved { count: 0, total: 0 }
+[INFO] 2026-01-16T17:39:11.969Z - Orders retrieved successfully { imei: '862798050831581', count: 100 }
+[Auth] Validating token { tokenPrefix: 'eyJraWQiOi', path: '/send', method: 'POST' }
+prisma:query SELECT `main`.`Token`.`id`, `main`.`Token`.`token`, `main`.`Token`.`expiresAt`, `main`.`Token`.`createdAt`, `main`.`Token`.`clientId`, `main`.`Token`.`encryptedSecret` FROM `main`.`Token` WHERE (`main`.`Token`.`token` = ? AND `main`.`Token`.`expiresAt` > ?) LIMIT ? OFFSET ?
+[Auth] Token valid {
+  tokenPrefix: 'eyJraWQiOi',
+  expiresAt: 2026-01-16T23:33:11.277Z,
+  minutesRemaining: 354
+}
+[INFO] 2026-01-16T17:39:22.574Z - Sending command to device { imei: '862798050831581', commandType: 'COMMAND', paramCount: 1 }
+prisma:query SELECT `main`.`Token`.`id`, `main`.`Token`.`token`, `main`.`Token`.`expiresAt`, `main`.`Token`.`createdAt`, `main`.`Token`.`clientId`, `main`.`Token`.`encryptedSecret` FROM `main`.`Token` WHERE `main`.`Token`.`expiresAt` > ? ORDER BY `main`.`Token`.`createdAt` DESC LIMIT ? OFFSET ?
+[ERROR] 2026-01-16T17:39:22.840Z - Error sending command {
+  status: 403,
+  data: {
+    message: "Authorization header requires 'Credential' parameter. Authorization header requires 'Signature' parameter. Authorization header requires 'SignedHeaders' parameter. Authorization header requires existence of either a 'X-Amz-Date' or a 'Date' header. (Hashed with SHA-256 and encoded with Base64) Authorization=fiEgzzL0P7vHLq2sj1q397A8vb7LxXkjhZAGCYRj/sI="
+  },
+  error: AxiosError: Request failed with status code 403
+      at settle (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\core\settle.js:19:12)
+      at IncomingMessage.handleStreamEnd (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\adapters\http.js:793:11)
+      at IncomingMessage.emit (node:events:520:35)
+      at endReadableNT (node:internal/streams/readable:1701:12)
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at Axios.request (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\core\Axios.js:45:41)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at GolfleetService.sendCommand (C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:171:24)
+      at C:\Users\Luis Romano\videotelemetria-ui\backend\src\routes\commands.ts:69:20 {
+    code: 'ERR_BAD_REQUEST',
+    config: {
+      transitional: [Object],
+      adapter: [Array],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 30000,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      env: [Object],
+      validateStatus: [Function: validateStatus],
+      headers: [Object [AxiosHeaders]],
+      baseURL: 'https://api.golfleet.apiv3.com',
+      method: 'post',
+      url: '/order/devices/862798050831581',
+      data: '{"type":"COMMAND","parameters":[{"module":"cmdd","key":"shellCmd","value":"reboot","type":"string"}]}',
+      allowAbsoluteUrls: true
+    },
+    request: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: true,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 101,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: true,
+      _header: 'POST /order/devices/862798050831581 HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'Authorization: eyJraWQiOiIwQjNsYWFraG94ZkhVbG5xSXZmY1g5Z29qalF4d29wRXN3SHEzXC9HRVRBMD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3NWU0NDRjZi1lMzFiLTRkOWMtOTQ5NS1kMWQ4ZjQzODFmMzgiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfaUpzeGszUGVOIiwiY29nbml0bzp1c2VybmFtZSI6Imx1aXNyb21hbm8iLCJvcmlnaW5fanRpIjoiMGMyODMwYzItYzFhNi00OTExLThiM2YtMmU5YzdkNGVmNDAwIiwiYXVkIjoiNGcydnJxamRncm5vZnByY3Y1MWI0aWx2azIiLCJldmVudF9pZCI6IjI3MzU4ZDY1LTMyMjgtNDI5NS1iN2RjLTMwMDE5NmVkZjZiNyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzY4NTg1MDkxLCJleHAiOjE3Njg1ODg2OTEsImlhdCI6MTc2ODU4NTA5MSwianRpIjoiNWY2OWU5NTUtN2U5Mi00NWJhLWJjYjMtYTIyNGQ5NGNkZmZmIiwiZW1haWwiOiJsdWlzLnJvbWFub0Bnb2xmbGVldC5jb20uYnIifQ.jl2Ju5PJWYZV_k8d56nFJQqHvtidAv_O8klxsQPm9qweE0G-QwZKDMX4mH3xtsI4fLqoS1cHr-ORbYL-USM5j6bhlXjCtE2rvuy0XIjKTK0ZpBuWu8oWZ7jPSrNma4XI65eYyv4Jtg6rspSQiASZqtaz0yzLOFea5HHob2S45Kq7q0w9utEVD3cY-TspzWQtQcgnx9QYkpnEVMeUpy__5zD8yfCl_pbbQ-GLZmkrRhX0qY5gjqY4PbQl0lBYHjQzLz0yfH0p0_FXgKFTT7_8Tl5-eYjNa_riceut7mvRh6p5A0lh9Nv-GNUI-FQxdDvI0nbankorAh_RISFd8jMAKw\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Content-Length: 101\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: api.golfleet.apiv3.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/order/devices/862798050831581',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'api.golfleet.apiv3.com',
+      protocol: 'https:',
+      _redirectable: [Writable],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false,
+      Symbol(kBytesWritten): 0,
+      Symbol(kNeedDrain): false,
+      Symbol(corked): 0,
+      Symbol(kChunkedBuffer): [],
+      Symbol(kChunkedLength): 0,
+      Symbol(kSocket): [TLSSocket],
+      Symbol(kOutHeaders): [Object: null prototype],
+      Symbol(errored): null,
+      Symbol(kHighWaterMark): 16384,
+      Symbol(kRejectNonStandardBodyWrites): false,
+      Symbol(kUniqueHeaders): null
+    },
+    response: {
+      status: 403,
+      statusText: 'Forbidden',
+      headers: [Object [AxiosHeaders]],
+      config: [Object],
+      request: [ClientRequest],
+      data: [Object]
+    },
+    status: 403
+  }
+}
+[ERROR] 2026-01-16T17:39:22.842Z - Error sending command {
+  body: {
+    imei: '862798050831581',
+    command: { type: 'COMMAND', parameters: [Array] }
+  },
+  error: AxiosError: Request failed with status code 403
+      at settle (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\core\settle.js:19:12)
+      at IncomingMessage.handleStreamEnd (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\adapters\http.js:793:11)
+      at IncomingMessage.emit (node:events:520:35)
+      at endReadableNT (node:internal/streams/readable:1701:12)
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at Axios.request (C:\Users\Luis Romano\videotelemetria-ui\node_modules\axios\lib\core\Axios.js:45:41)
+      at processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at GolfleetService.sendCommand (C:\Users\Luis Romano\videotelemetria-ui\backend\src\services\golfleet.ts:171:24)
+      at C:\Users\Luis Romano\videotelemetria-ui\backend\src\routes\commands.ts:69:20 {
+    code: 'ERR_BAD_REQUEST',
+    config: {
+      transitional: [Object],
+      adapter: [Array],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 30000,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      env: [Object],
+      validateStatus: [Function: validateStatus],
+      headers: [Object [AxiosHeaders]],
+      baseURL: 'https://api.golfleet.apiv3.com',
+      method: 'post',
+      url: '/order/devices/862798050831581',
+      data: '{"type":"COMMAND","parameters":[{"module":"cmdd","key":"shellCmd","value":"reboot","type":"string"}]}',
+      allowAbsoluteUrls: true
+    },
+    request: ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: true,
+      _last: false,
+      chunkedEncoding: false,
+      shouldKeepAlive: true,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      strictContentLength: false,
+      _contentLength: 101,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: true,
+      _header: 'POST /order/devices/862798050831581 HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/json\r\n' +
+        'Authorization: eyJraWQiOiIwQjNsYWFraG94ZkhVbG5xSXZmY1g5Z29qalF4d29wRXN3SHEzXC9HRVRBMD0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3NWU0NDRjZi1lMzFiLTRkOWMtOTQ5NS1kMWQ4ZjQzODFmMzgiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfaUpzeGszUGVOIiwiY29nbml0bzp1c2VybmFtZSI6Imx1aXNyb21hbm8iLCJvcmlnaW5fanRpIjoiMGMyODMwYzItYzFhNi00OTExLThiM2YtMmU5YzdkNGVmNDAwIiwiYXVkIjoiNGcydnJxamRncm5vZnByY3Y1MWI0aWx2azIiLCJldmVudF9pZCI6IjI3MzU4ZDY1LTMyMjgtNDI5NS1iN2RjLTMwMDE5NmVkZjZiNyIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzY4NTg1MDkxLCJleHAiOjE3Njg1ODg2OTEsImlhdCI6MTc2ODU4NTA5MSwianRpIjoiNWY2OWU5NTUtN2U5Mi00NWJhLWJjYjMtYTIyNGQ5NGNkZmZmIiwiZW1haWwiOiJsdWlzLnJvbWFub0Bnb2xmbGVldC5jb20uYnIifQ.jl2Ju5PJWYZV_k8d56nFJQqHvtidAv_O8klxsQPm9qweE0G-QwZKDMX4mH3xtsI4fLqoS1cHr-ORbYL-USM5j6bhlXjCtE2rvuy0XIjKTK0ZpBuWu8oWZ7jPSrNma4XI65eYyv4Jtg6rspSQiASZqtaz0yzLOFea5HHob2S45Kq7q0w9utEVD3cY-TspzWQtQcgnx9QYkpnEVMeUpy__5zD8yfCl_pbbQ-GLZmkrRhX0qY5gjqY4PbQl0lBYHjQzLz0yfH0p0_FXgKFTT7_8Tl5-eYjNa_riceut7mvRh6p5A0lh9Nv-GNUI-FQxdDvI0nbankorAh_RISFd8jMAKw\r\n' +
+        'User-Agent: axios/1.13.2\r\n' +
+        'Content-Length: 101\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: api.golfleet.apiv3.com\r\n' +
+        'Connection: keep-alive\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      joinDuplicateHeaders: undefined,
+      path: '/order/devices/862798050831581',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'api.golfleet.apiv3.com',
+      protocol: 'https:',
+      _redirectable: [Writable],
+      Symbol(shapeMode): false,
+      Symbol(kCapture): false,
+      Symbol(kBytesWritten): 0,
+      Symbol(kNeedDrain): false,
+      Symbol(corked): 0,
+      Symbol(kChunkedBuffer): [],
+      Symbol(kChunkedLength): 0,
+      Symbol(kSocket): [TLSSocket],
+      Symbol(kOutHeaders): [Object: null prototype],
+      Symbol(errored): null,
+      Symbol(kHighWaterMark): 16384,
+      Symbol(kRejectNonStandardBodyWrites): false,
+      Symbol(kUniqueHeaders): null
+    },
+    response: {
+      status: 403,
+      statusText: 'Forbidden',
+      headers: [Object [AxiosHeaders]],
+      config: [Object],
+      request: [ClientRequest],
+      data: [Object]
+    },
+    status: 403
+  }
+}

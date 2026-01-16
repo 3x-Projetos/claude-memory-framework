@@ -1,0 +1,16 @@
+[INFO] 2026-01-16T16:50:39.044Z - Fetching command history { imei: '862798050831581', limit: 50, offset: 0 }
+prisma:query SELECT `main`.`CommandHistory`.`id`, `main`.`CommandHistory`.`imei`, `main`.`CommandHistory`.`orderUlid`, `main`.`CommandHistory`.`commandType`, `main`.`CommandHistory`.`description`, `main`.`CommandHistory`.`payload`, `main`.`CommandHistory`.`status`, `main`.`CommandHistory`.`sentAt`, `main`.`CommandHistory`.`updatedAt` FROM `main`.`CommandHistory` WHERE `main`.`CommandHistory`.`imei` = ? ORDER BY `main`.`CommandHistory`.`sentAt` DESC LIMIT ? OFFSET ?
+prisma:query SELECT COUNT(*) FROM (SELECT `main`.`CommandHistory`.`id` FROM `main`.`CommandHistory` WHERE `main`.`CommandHistory`.`imei` = ? LIMIT ? OFFSET ?) AS `sub`
+[INFO] 2026-01-16T16:50:39.048Z - Command history retrieved { count: 0, total: 0 }
+[Auth] Validating token { tokenPrefix: 'eyJraWQiOi', path: '/', method: 'GET' }
+prisma:query SELECT 1
+prisma:query SELECT `main`.`Token`.`id`, `main`.`Token`.`token`, `main`.`Token`.`expiresAt`, `main`.`Token`.`createdAt` FROM `main`.`Token` WHERE (`main`.`Token`.`token` = ? AND `main`.`Token`.`expiresAt` > ?) LIMIT ? OFFSET ?
+[Auth] Token valid {
+  tokenPrefix: 'eyJraWQiOi',
+  expiresAt: 2026-01-16T21:25:22.917Z,
+  minutesRemaining: 274
+}
+[INFO] 2026-01-16T16:51:09.072Z - Fetching command history { imei: '862798050831581', limit: 50, offset: 0 }
+prisma:query SELECT `main`.`CommandHistory`.`id`, `main`.`CommandHistory`.`imei`, `main`.`CommandHistory`.`orderUlid`, `main`.`CommandHistory`.`commandType`, `main`.`CommandHistory`.`description`, `main`.`CommandHistory`.`payload`, `main`.`CommandHistory`.`status`, `main`.`CommandHistory`.`sentAt`, `main`.`CommandHistory`.`updatedAt` FROM `main`.`CommandHistory` WHERE `main`.`CommandHistory`.`imei` = ? ORDER BY `main`.`CommandHistory`.`sentAt` DESC LIMIT ? OFFSET ?
+prisma:query SELECT COUNT(*) FROM (SELECT `main`.`CommandHistory`.`id` FROM `main`.`CommandHistory` WHERE `main`.`CommandHistory`.`imei` = ? LIMIT ? OFFSET ?) AS `sub`
+[INFO] 2026-01-16T16:51:09.075Z - Command history retrieved { count: 0, total: 0 }

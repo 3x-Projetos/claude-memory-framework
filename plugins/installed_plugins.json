@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "plugins": {
+    "pyright-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "C:\\Users\\Luis Romano\\.claude\\plugins\\cache\\claude-plugins-official\\pyright-lsp\\1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-06T18:46:34.608Z",
+        "lastUpdated": "2026-01-06T18:46:34.608Z",
+        "gitCommitSha": "0e51460762af76d155b59b3c3f9d79782f946ab0",
+        "isLocal": true
+      }
+    ]
+  }
+}

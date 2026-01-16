@@ -16,6 +16,34 @@ Multi-device memory system for AI providers. This complements ~/.claude/CLAUDE.m
 
 ---
 
+## 🤖 CRITICAL: Agent-First Development
+
+**ABSOLUTE RULE - ALWAYS USE SPECIALIZED AGENTS**:
+- ✅ ALWAYS use existing specialized agents for tasks that match their domain
+- ✅ If no suitable agent exists, CREATE ONE before starting work
+- ✅ Agents prevent context bloat and enable focused, specialized problem-solving
+- ✅ Agents maintain expertise and best practices in their domain
+- ❌ NEVER do complex work directly without considering agents first
+- ❌ NEVER skip agent creation when a new specialization is needed
+
+**Available Agents (check `.claude/agents/` directory)**:
+- `backend-validator` - Validate routes, schemas, error handling, security
+- `frontend-validator` - Validate accessibility, performance, UX, type safety
+- `tech-lead-coordinator` - Assess architecture, coordinate agents, identify risks
+- `test-specialist` - Analyze coverage, suggest test cases, validate quality
+- `ui-specialist` - Evaluate layout, spacing, visual design, responsiveness
+- `ux-specialist` - Analyze usability, flows, accessibility, error handling
+
+**Agent-First Workflow**:
+1. **Before starting ANY complex task**: Check if agent exists
+2. **If agent exists**: Use it immediately for that domain
+3. **If no agent exists**: Create specialized agent FIRST, then use it
+4. **Never work directly**: Let agents handle their specialization
+
+**Why**: Agents provide consistent expertise, reduce errors, maintain best practices, and prevent context waste.
+
+---
+
 ## Quick Reference
 
 **Memory Location**: `~/.claude-memory/`

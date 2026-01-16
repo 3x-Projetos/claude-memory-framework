@@ -133,12 +133,16 @@ def main():
 
     five_hour_pct = int(five_hour.get('utilization', 0))
     seven_day_pct = int(seven_day.get('utilization', 0))
-    reset_time = five_hour.get('resets_at', '')
 
-    time_until_reset = format_time_until_reset(reset_time)
+    # Get reset times for both 5H and WK
+    five_hour_reset = five_hour.get('resets_at', '')
+    seven_day_reset = seven_day.get('resets_at', '')
 
-    # Format output
-    output = f"5H:{five_hour_pct}% WK:{seven_day_pct}% RST:{time_until_reset}"
+    time_until_5h_reset = format_time_until_reset(five_hour_reset)
+    time_until_wk_reset = format_time_until_reset(seven_day_reset)
+
+    # Format output with both reset times
+    output = f"5H:{five_hour_pct}% WK:{seven_day_pct}% RST-5H:{time_until_5h_reset} RST-WK:{time_until_wk_reset}"
     print(output, end='')
 
 if __name__ == "__main__":

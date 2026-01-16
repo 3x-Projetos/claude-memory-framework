@@ -1,0 +1,469 @@
+CONTEXTO E DICAS:
+Os dispositivos funcionam com Android 8
+Nossa aplicação (R2) permite comandos estruturados para a aplicação E também permitem comandos shell (shellScript e shellCmd).
+Comandos shellCmd podem ser processados como shellScript, mas o contrário não é válido. Na duvida entre o tipo de comandos a serem elaborados, dê preferência para shellScript.
+
+
+COMANDOS, COM NOTAS:
+ls para o dispositivo para verificar o conteúdo da pasta driverCoach  - resposta retorna junto com o payload de evento, acessível através da API Get the Events From Devices by Time - procure por eventos contendo o horário de execução da Order!
+
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "module": "cmdd",
+            "key": "shellScript",
+            "value": "ls -l /mnt/sdcard/driverCoach",
+            "type": "string"
+        }
+    ]
+}
+
+---
+
+Atualizar aplicação (1.18.8, versão atual em produção em 15/01/2026)
+Considere campo para digitar versão a ser enviada.
+
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "downloaderd",
+            "Key": "destinationPath",
+            "Value": "/storage/self/primary/installer",
+            "Type": "string"
+        },
+        {
+            "Module": "downloaderd",
+            "Key": "destinationFile",
+            "Value": "br.com.v3.r2.apk",
+            "Type": "string"
+        },
+        {
+            "Module": "downloaderd",
+            "Key": "sourcePath",
+            "Value": "573598560824-prod-apks-release",
+            "Type": "string"
+        },
+        {
+            "Module": "downloaderd",
+            "Key": "sourceFile",
+            "Value": "R2/br.com.v3.r2.apk_1.18.8",
+            "Type": "string"
+        },
+        {
+            "Module": "downloaderd",
+            "Key": "retry",
+            "Value": "5",
+            "Type": "int"
+        }
+    ]
+}
+
+---
+
+UP DATABASES - SIMPLIFICADO
+cria o arquivo databases.tar (compactado) dentro do diretório /sdcard/uploader/, contendo todos os arquivos (.) do diretório /data/data/br.com.v3.r2/databases. 
+
+criação do .tar no diretorio de upload
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellCmd",
+            "Value": "tar -cvf /sdcard/uploader/databases.tar -C /data/data/br.com.v3.r2/databases .",
+            "Type": "string"
+        }
+    ]
+}
+
+Sobe o arquivo databases.tar para a respectiva pasta <IMEI> na cloud, podendo ser recuperada via endpoint Get Files from Events.
+O arquivo pode ser aberto usando a ferramenta tar no terminal do linux ou a ferramenta de zip padrão do windows
+
+upload para a cloud
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "uploaderd",
+            "Key": "destinationPath",
+            "Value": "573598560824-prod-device-uploads",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "destinationFile",
+            "Value": "01GZXXCVVPEKM7E830XAMJKA14/<IMEI>/databases.tar",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourcePath",
+            "Value": "/sdcard/uploader",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourceFile",
+            "Value": "databases.tar",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "retry",
+            "Value": "5",
+            "Type": "int"
+        }
+    ]
+}
+
+---
+
+O mesmo formato é válido para baixar shared prefs
+
+criação do .tar no diretório de upload.
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellCmd",
+            "Value": "tar -cvf /sdcard/uploader/shared_prefs.tar -C data/data/br.com.v3.r2/shared_prefs .",
+            "Type": "string"
+        }
+    ]
+}
+
+upload para a cloud
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "uploaderd",
+            "Key": "destinationPath",
+            "Value": "573598560824-prod-device-uploads",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "destinationFile",
+            "Value": "01GZXXCVVPEKM7E830XAMJKA14/<IMEI>/shared_prefs.tar",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourcePath",
+            "Value": "/sdcard/uploader",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourceFile",
+            "Value": "shared_prefs.tar",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "retry",
+            "Value": "5",
+            "Type": "int"
+        }
+    ]
+}
+
+---
+
+script para rodar um ls e identificar arquivos parados na pasta do uploader em R2
+
+1.1 - ls arquivos dentro da uploader
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellScript",
+            "Value": "ls -lh /sdcard/uploader/ > /sdcard/uploader/uploaderFiles.txt",
+            "Type": "string"
+        }
+    ]
+}
+ 
+1.2 - Upload do arquivo txt
+Inserir o [IMEI] de interesse na seção destinationFile do código abaixo para garantir o endereço de destino correto!
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "uploaderd",
+            "Key": "destinationPath",
+            "Value": "573598560824-prod-device-uploads",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "destinationFile",
+            "Value": "01GZXXCVVPEKM7E830XAMJKA14/[IMEI]/uploaderFiles.txt",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourcePath",
+            "Value": "/sdcard/uploader",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourceFile",
+            "Value": "uploaderFiles.txt",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "retry",
+            "Value": "5",
+            "Type": "int"
+        }
+    ]
+}
+
+---
+
+df simples, via shellCmd - resposta retorna junto com o payload de evento, acessível através da API Get the Events From Devices by Time - procure por eventos contendo o horário de execução da Order!
+
+Reporta % de armazenamento preenchido - auxilia validar equipamentos que possam estar com armazenamento cheio
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellCmd",
+            "Value": "df",
+            "Type": "string"
+        }
+    ]
+}
+
+---
+
+pedir mac address ao equipamento - resposta retorna junto com o payload de evento, acessível através da API Get the Events From Devices by Time - procure por eventos contendo o horário de execução da Order!
+
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellCmd",
+            "Value": "cat /sys/class/net/wlan0/address",
+            "Type": "string"
+        }
+    ]
+}
+
+---
+
+ajuste de volume voice (0.0 a 100.0)
+{
+    "type": "CONFIG",
+    "parameters": [
+        {
+            "module": "voiced",
+            "key": "MEDIA_VOLUME",
+            "value": "75.0",
+            "type": "float"
+        }
+    ]
+}
+
+---
+
+habilitar faceid
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "facep",
+            "Key": "ENABLED",
+            "Value": "true",
+            "Type": "boolean"
+        }
+    ]
+}
+
+---
+
+Exemplo de comando de inserção de APN (sem user e pass)
+
+PREENCHER:
+NOMEAPN
+MNC (dois campos)
+LINKAPN
+
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "module": "cmdd",
+            "key": "shellCmd",
+            "value": "content insert --uri content://telephony/carriers --bind name:s:{NOMEAPN} --bind numeric:s:724{MNC} --bind type:s:default,sulp --bind mcc:i:724 --bind mnc:s:{MNC} --bind apn:s:{LINKAPN}",
+            "type": "string"
+        }
+    ]
+}
+
+---
+
+validar apns baixando db telephony
+
+copia do db para o diretório de upload
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellCmd",
+            "Value": "cp /data/user_de/0/com.android.providers.telephony/databases/telephony.db /sdcard/uploader/telephony.db",
+            "Type": "string"
+        }
+    ]
+}
+
+upload
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "uploaderd",
+            "Key": "destinationPath",
+            "Value": "573598560824-prod-device-uploads",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "destinationFile",
+            "Value": "01GZXXCVVPEKM7E830XAMJKA14/<IMEI>/telephony.db",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourcePath",
+            "Value": "/sdcard/uploader",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "sourceFile",
+            "Value": "telephony.db",
+            "Type": "string"
+        },
+        {
+            "Module": "uploaderd",
+            "Key": "retry",
+            "Value": "5",
+            "Type": "int"
+        }
+    ]
+}
+
+---
+
+Format Sdcard
+Para cartões com 100% de armazenamento preenchido
+CUIDADO! ESTE COMANDO APAGA TODOS OS DADOS DO CARTAO DE MEMORIA
+CUIDADO!
+
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "cmdd",
+            "Key": "shellScript",
+            "Value": "sm unmount public:179,65 || echo \"Unmount failed\" && sm format public:179,65 || echo \"Format failed\" && sm mount public:179,65 || echo \"Mount failed\" && reboot",
+            "Type": "string"
+        }
+    ]
+}
+
+---
+
+Desativar DMS_BASIC
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "message_sender",
+            "Key": "tableName",
+            "Value": "eventConfigTable",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "level",
+            "Value": "group",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "eventValue",
+            "Value": "DMS_BASIC",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "shouldPlayAudio",
+            "Value": "false",
+            "Type": "boolean"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "shouldSendV3Message",
+            "Value": "false",
+            "Type": "boolean"
+        }
+    ]
+}
+ 
+Desativar DMS_ADVANCED
+{
+    "type": "COMMAND",
+    "parameters": [
+        {
+            "Module": "message_sender",
+            "Key": "tableName",
+            "Value": "eventConfigTable",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "level",
+            "Value": "group",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "eventValue",
+            "Value": "DMS_ADVANCED",
+            "Type": "string"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "shouldPlayAudio",
+            "Value": "false",
+            "Type": "boolean"
+        },
+        {
+            "Module": "message_sender",
+            "Key": "shouldSendV3Message",
+            "Value": "false",
+            "Type": "boolean"
+        }
+    ]
+}
+ 
+shouldSendV3Message = Evento V3 (e MRV)
+shouldPlayAudio = Voice Coach
+ 
+"Value": "false" para Desativar
+"Value": "true" para Ativar
+
+---

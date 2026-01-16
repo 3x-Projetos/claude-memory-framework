@@ -93,5 +93,9 @@
   "statusLine": {
     "type": "command",
     "command": "npx -y ccstatusline@latest"
-  }
+  },
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "model": "sonnet"
 }
