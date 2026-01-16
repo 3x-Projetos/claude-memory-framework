@@ -346,8 +346,25 @@ Does it have sequential dependencies?
 
 Is there a coordinating agent + specialists?
     ├─ YES → Hub-and-Spoke Team
+    └─ NO ↓
+
+Are you UNCERTAIN which pattern to use?
+    ├─ YES → ASK USER for guidance
+    │         User can suggest or delegate decision
     └─ NO → Single specialized agent
 ```
+
+**⚠️ IMPORTANT - When Uncertain About Team Pattern**:
+
+**ALWAYS validate with user when uncertain**. Present options clearly:
+- "I see this could be [Pattern A] because [reason] or [Pattern B] because [reason]. Which would you prefer?"
+- "This task seems to need [Pattern X]. Does that sound right, or would you suggest a different approach?"
+- User can either:
+  - Provide specific guidance ("Use Pattern A")
+  - Suggest alternative approach ("Actually, try Pattern C")
+  - Delegate decision back ("Your call, go with what makes sense")
+
+**Never assume** when multiple patterns could work. User context often reveals the best choice.
 
 ---
 
