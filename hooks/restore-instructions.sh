@@ -5,8 +5,8 @@
 set -euo pipefail
 
 # Source common utilities
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/common.sh"
+# Use absolute path instead of BASH_SOURCE for Windows/Git Bash compatibility
+source "$HOME/.claude/hooks/common.sh"
 
 # Check if preserved context exists
 if ! file_exists "$PRESERVED_FILE"; then
