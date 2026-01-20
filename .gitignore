@@ -94,3 +94,6 @@ desktop.ini
 # ✅ CLAUDE.md
 # ✅ PATHS.md
 # ✅ CHANGELOG.md
+
+# Golfleet files with secrets
+V3-Golfleet/Batch-*.py
