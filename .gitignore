@@ -97,3 +97,7 @@ desktop.ini
 
 # Golfleet files with secrets
 V3-Golfleet/Batch-*.py
+
+# Golfleet reference files (not to be versioned)
+V3-Golfleet/*.py
+V3-Golfleet/*.csv
