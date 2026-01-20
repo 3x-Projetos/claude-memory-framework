@@ -69,12 +69,27 @@
         ]
       }
     ],
+    "PreCompact": [
+      {
+        "matcher": "auto|manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/preserve-instructions.sh"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "python .claude/session-start.py"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/restore-instructions.sh"
           }
         ]
       }
