@@ -1,0 +1,139 @@
+# Global Claude Configuration (v3.4)
+
+**Context Preservation System**: Modular rules + hooks + skills
+
+## 🚨 CRITICAL RULES (Always Active)
+
+### 1. Agent-First Development ⚡
+**ABSOLUTE RULE**: Never implement code without agents
+
+Full details: `~/.claude/rules/agent-first-development.md`
+
+**Quick checklist**:
+- [ ] Consulted tech-lead for planning?
+- [ ] Used specialist agent for implementation?
+- [ ] Used validator for review?
+- ❌ If NO to any → STOP, use agents first
+
+### 2. Data Accuracy ✅
+**ABSOLUTE RULE**: Never invent data
+
+Full details: `~/.claude/rules/data-accuracy.md`
+
+**Quick rules**:
+- ❌ NO fabricated numbers, metrics, or specifications
+- ✅ ALWAYS verify from actual sources
+- ✅ If unknown, say "I need to research this"
+
+### 3. Use Agents for Exploration 🔍
+- ✅ Use Task tool with Explore/general-purpose subagent
+- ✅ **ALWAYS specify working directory in prompts**
+- ❌ NEVER grep/glob/read multiple files directly
+
+---
+
+## 📁 Modular Rules System
+
+Critical rules are now in separate files:
+- `~/.claude/rules/agent-first-development.md` - Agent workflow enforcement
+- `~/.claude/rules/data-accuracy.md` - Data verification requirements
+- `~/.claude/rules/project-guidelines.md` - General project guidelines
+
+**These files are preserved during context compaction via hooks.**
+
+---
+
+## 🔧 Context Preservation System
+
+### How It Works
+1. **PreCompact hook**: Saves critical rules before compaction
+2. **SessionStart hook**: Restores rules after compaction
+3. **agent-enforcer skill**: Auto-enforces agent-first workflow
+
+### Files
+- Hooks: `~/.claude/hooks/preserve-instructions.sh`, `restore-instructions.sh`
+- Skills: `~/.claude/skills/agent-enforcer/SKILL.md`
+- Preserved context: `~/.claude/.preserved-context.md` (temporary)
+
+---
+
+## 📋 Memory System
+
+**Location**: `~/.claude-memory/`
+**Version**: v3.4
+
+### Structure
+```
+~/.claude-memory/
+├── providers/claude/
+│   ├── session-state.md       # START HERE
+│   └── logs/daily/            # Session logs
+├── projects/{name}/
+│   ├── .context.quick.md      # Load first (summary)
+│   ├── .context.md            # Load on-demand (full)
+│   └── .claude/               # Project-specific config
+│       ├── CLAUDE.md          # Project instructions
+│       ├── rules/*.md         # Project rules
+│       └── agents/            # Project agents
+└── integration/
+    └── provider-activities.quick.md
+```
+
+### Session Commands
+- `/continue` - Resume last session (~1k tokens)
+- `/end` - Save & sync logs
+- `/switch {project}` - Change active project
+
+---
+
+## 🎯 Progressive Loading
+
+**First load** (minimal):
+1. `session-state.md` - Where you left off
+2. `provider-activities.quick.md` - Recent work
+3. `.context.quick.md` - Project summary (if active project)
+
+**On-demand**:
+- Load `.context.md` when modifying project
+- Load `.status.md` when checking roadmap
+- Load full logs when researching history
+
+---
+
+## 🗂️ Projects
+
+**Active Projects**:
+- `videotelemetria-ui` - Full-stack telemetry system
+  - Agents: backend-validator, frontend-validator, ui-specialist, ux-specialist, tech-lead, api-debugger
+  - Location: `~/.claude-memory/projects/videotelemetria-ui/`
+
+**Project-Specific Config**:
+- Each project can have `.claude/CLAUDE.md` with project-specific instructions
+- Project rules in `.claude/rules/*.md`
+- Project agents in `.claude/agents/`
+
+---
+
+## 📚 Reference Documentation
+
+**Load ONLY when needed**:
+- `~/.claude/README.md` - Framework overview
+- `~/.claude/QUICKSTART.md` - Setup guide
+- `~/.claude/MEMORY-ORGANIZATION.md` - Architecture
+- `~/.claude/docs/TEAMS-FRAMEWORK.md` - Agent teams
+- `~/.claude/skills/{name}/GUIDE.md` - Skill docs
+
+---
+
+## ⚙️ Current Work
+
+**Framework**: v3.4 - Context preservation system implemented
+**Active Issues**: #13 (Progressive Loading), #12 (Labels), #9 (CHANGELOG)
+**GitHub**: https://github.com/luisromano-gf/claude-memory-system-repo
+
+---
+
+**System Status**: ✅ Context preservation active
+**Hooks**: PreCompact + SessionStart configured
+**Skills**: agent-enforcer active
+**Rules**: Modular system (3 global, project-specific available)
